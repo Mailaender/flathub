@@ -1,10 +1,14 @@
 {
-    "app-id" : "com.xamarin.MonoDevelop",
-    "runtime" : "org.gnome.Sdk",
-    "runtime-version" : "3.34",
-    "sdk" : "org.gnome.Sdk",
-    "command" : "monodevelop",
-    "finish-args" : [
+    "app-id": "com.xamarin.MonoDevelop",
+    "runtime": "org.gnome.Sdk",
+    "runtime-version": "41",
+    "sdk": "org.gnome.Sdk",
+    "sdk-extensions": [
+        "org.freedesktop.Sdk.Extension.mono6"
+    ],
+    "writable-sdk": true,
+    "command": "monodevelop",
+    "finish-args": [
         "--require-version=0.8.3",
         "--allow=devel",
         "--talk-name=org.freedesktop.Flatpak",
@@ -22,31 +26,84 @@
         "--system-talk-name=org.freedesktop.PolicyKit1",
         "--env=GIO_MODULE_DIR=/app/lib/gio/modules"
     ],
-    "build-options" : {
+    "build-options": {
         "cflags": "-O2 -g",
         "cxxflags": "-O2 -g",
+        "append-path": "/usr/lib/sdk/mono6/bin",
+        "append-ld-library-path": "/usr/lib/sdk/mono6/lib",
+        "append-pkg-config-path": "/usr/lib/sdk/mono6/lib/pkgconfig",
         "env": {
-            "V": "1"
+            "V": "1",
+            "MONO_GAC_PREFIX": "/app"
         },
         "build-args": [
             "--share=network"
         ]
     },
-    "cleanup": ["/include", "/share/aclocal",
-                "/man", "/share/man", "/share/gtk-doc",
-                "/share/vala",
-                "*.la", "*.a",
-                "*unwind*", "libicu*"],
-    "modules" : [
-         {
-            "name": "monodevelop",
+    "cleanup": [
+        "/include",
+        "/share/aclocal",
+        "/man",
+        "/share/man",
+        "/share/gtk-doc",
+        "/share/vala",
+        "*.la",
+        "*.a",
+        "*unwind*",
+        "libicu*"
+    ],
+    "modules": [
+        {
+            "name": "mono6",
+            "buildsystem": "simple",
+            "build-commands": [
+                "/usr/lib/sdk/mono6/install.sh System.ComponentModel.Composition System.Net.Http System.ComponentModel.DataAnnotations WindowsBase Microsoft.Build.Utilities.v4.0 Microsoft.Build.Framework System.Xml.Linq System.Data System.Runtime.Serialization System.Numerics System.IO.Compression System.Data.Services.Client System.ServiceModel"
+            ]
+        },
+        {
+            "name": "msbuild",
+            "buildsystem": "simple",
+            "build-commands": [
+                "ar x msbuild_*.deb",
+                "tar xf data.tar.xz",
+                "sed -e 's|/usr/|/usr/lib/sdk/mono6/|g' -i usr/bin/msbuild",
+                "cp -a usr/. /usr/lib/sdk/mono6/"
+            ],
+            "sources": [
+                {
+                    "type": "file",
+                    "url": "https://download.mono-project.com/repo/ubuntu/pool/main/m/msbuild/msbuild_16.6+xamarinxplat.2021.01.15.16.11-0xamarin1+debian10b1_all.deb",
+                    "sha256": "300a0b2a10cd8a2f5555dc0c5db9b1127d2f24b274c8893984de8127cc68d7a4"
+                }
+            ]
+        },
+        {
+            "name": "fsharp",
             "no-parallel-make": true,
             "sources": [
                 {
                     "type": "git",
-                    "disable-shallow-clone": true,
-                    "url": "https://github.com/mono/monodevelop.git",
-                    "branch": "monodevelop-8.4.3.12"
+                    "url": "https://github.com/fsharp/fsharp.git",
+                    "branch": "4.1.33"
+                },
+                {
+                    "type": "patch",
+                    "path": "patches/fsharp/fix-bootstrap-src-targets-path.patch"
+                },
+                {
+                    "type": "patch",
+                    "path": "patches/fsharp/fsharp-fix-mdb-support.patch"
+                }
+            ]
+        },
+        {
+            "name": "monodevelop",
+            "no-parallel-make": true,
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://download.mono-project.com/sources/monodevelop/monodevelop-7.8.4.1.tar.bz2",
+                    "sha256": "f93278e146b77bfbc5d456fbc0df29c0e8c34b7593215be2b809e8e78a9cab82"
                 }
             ]
         }
