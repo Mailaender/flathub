@@ -1,0 +1,54 @@
+{
+    "app-id" : "com.xamarin.MonoDevelop",
+    "runtime" : "org.gnome.Sdk",
+    "runtime-version" : "3.34",
+    "sdk" : "org.gnome.Sdk",
+    "command" : "monodevelop",
+    "finish-args" : [
+        "--require-version=0.8.3",
+        "--allow=devel",
+        "--talk-name=org.freedesktop.Flatpak",
+        "--device=dri",
+        "--share=ipc",
+        "--socket=fallback-x11",
+        "--socket=wayland",
+        "--socket=ssh-auth",
+        "--socket=session-bus",
+        "--socket=system-bus",
+        "--filesystem=home",
+        "--filesystem=host",
+        "--share=network",
+        "--talk-name=org.gtk.vfs.*",
+        "--system-talk-name=org.freedesktop.PolicyKit1",
+        "--env=GIO_MODULE_DIR=/app/lib/gio/modules"
+    ],
+    "build-options" : {
+        "cflags": "-O2 -g",
+        "cxxflags": "-O2 -g",
+        "env": {
+            "V": "1"
+        },
+        "build-args": [
+            "--share=network"
+        ]
+    },
+    "cleanup": ["/include", "/share/aclocal",
+                "/man", "/share/man", "/share/gtk-doc",
+                "/share/vala",
+                "*.la", "*.a",
+                "*unwind*", "libicu*"],
+    "modules" : [
+         {
+            "name": "monodevelop",
+            "no-parallel-make": true,
+            "sources": [
+                {
+                    "type": "git",
+                    "disable-shallow-clone": true,
+                    "url": "https://github.com/mono/monodevelop.git",
+                    "branch": "monodevelop-8.4.3.12"
+                }
+            ]
+        }
+    ]
+}
