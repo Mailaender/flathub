@@ -1,0 +1,14 @@
+{
+    "name": "python3-Panda3D",
+    "buildsystem": "simple",
+    "build-commands": [
+        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"panda3d\" --no-build-isolation"
+    ],
+    "sources": [
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/a9/43/584489d9fe98904fa6e25be359f251b6a6e0d8e2d98cbbdba6a5f51f391f/panda3d-1.10.11-cp39-cp39-manylinux1_x86_64.whl",
+            "sha256": "d0c7fce3aeb865e06db509e546ac2f4cc9660c484852a87a48bb04d206aa464e"
+        }
+    ]
+}

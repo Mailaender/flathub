@@ -1,0 +1,48 @@
+app-id: it.ya2.Yorg
+runtime: org.freedesktop.Platform
+runtime-version: '21.08'
+sdk: org.freedesktop.Sdk
+command: yorg
+rename-icon: yorg
+rename-desktop-file: yorg.desktop
+rename-appdata-file: yorg.appdata.xml
+finish-args:
+  - --device=dri
+  - --share=network
+  - --share=ipc
+  - --socket=x11
+
+modules:
+  - python3-Panda3D.json
+  - scons.json
+  - python3-bson.json
+
+  - name: yorg
+    sources:
+    - type: git
+      url: https://github.com/cflavio/yorg.git
+      tag: v0.11.0.post0
+      commit: d398bf20a50f87de52b6649b7fb087a1db19398b
+      x-checker-data:
+        type: git
+        tag-pattern: ^([\d.]+)$
+    - type: file
+      path: yorg.desktop
+    - type: file
+      path: yorg.appdata.xml
+    buildsystem: simple
+    build-commands:
+      - scons lang=1 images=1 tracks=1 -j ${FLATPAK_BUILDER_N_JOBS}
+    post-install:
+      - mkdir -p ${FLATPAK_DEST}/share/yorg/
+      - cp -r assets ${FLATPAK_DEST}/share/yorg/
+      - cp -r menu ${FLATPAK_DEST}/share/yorg/
+      - cp -r yorg ${FLATPAK_DEST}/share/yorg/
+      - cp -r yracing ${FLATPAK_DEST}/share/yorg/
+      - cp -r yyagl ${FLATPAK_DEST}/share/yorg/
+      - install -Dm755 main.py ${FLATPAK_DEST}/share/games/yorg/main.py
+      - install -Dm664 options.json ${FLATPAK_DEST}/share/games/yorg/options.json
+      - install -Dm755 /yorg ${FLATPAK_DEST}/bin/yorg
+      - install -Dm644 yorg.desktop ${FLATPAK_DEST}/share/applications/yorg.desktop
+      - install -Dm644 assets/images/icon/icon128_png.png ${FLATPAK_DEST}/share/icons/hicolor/128x128/apps/yorg.png
+      - install -Dm644 yorg.appdata.xml ${FLATPAK_DEST}/share/appdata/yorg.appdata.xml
