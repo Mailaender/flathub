@@ -1,0 +1,29 @@
+{
+  "app-id": "org.kde.plasmatube",
+  "runtime": "org.kde.Platform",
+  "runtime-version": "5.15-21.08",
+  "sdk": "org.kde.Sdk",
+  "command": "plasmatube",
+  "finish-args": [
+    "--device=dri",
+    "--share=ipc",
+    "--share=network",
+    "--socket=wayland",
+    "--socket=fallback-x11",
+    "--socket=pulseaudio"
+  ],
+  "modules": [
+    {
+      "name": "plasmatube",
+      "buildsystem": "cmake-ninja",
+      "builddir": true,
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://download.kde.org/stable/plasma-mobile/22.04/plasmatube-22.04.tar.xz",
+          "sha256": "dd33c4294f2f884925ca73d9b68a1024a8c3646b13e822090a95320560eb7505"
+        }
+      ]
+    }
+  ]
+}
