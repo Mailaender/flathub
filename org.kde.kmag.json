@@ -1,0 +1,33 @@
+{
+  "app-id": "org.kde.kmag",
+  "runtime": "org.kde.Platform",
+  "runtime-version": "5.15-21.08",
+  "sdk": "org.kde.Sdk",
+  "command": "kmag",
+  "rename-icon": "kmag",
+  "finish-args": [
+    "--device=dri",
+    "--share=ipc",
+    "--socket=wayland",
+    "--socket=fallback-x11"
+  ],
+  "modules": [
+    {
+      "name": "kmag",
+      "buildsystem": "cmake-ninja",
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://download.kde.org/stable/release-service/22.04.1/src/kmag-22.04.1.tar.xz",
+          "sha256": "ff2341c12d3f4eeced74339912079120266a3830451e8486a810ffedf2e3316a",
+          "x-checker-data": {
+            "type": "anitya",
+            "project-id": 8763,
+            "stable-only": true,
+            "url-template": "https://download.kde.org/stable/kmag/$version/kmag-$version.tar.xz"
+          }
+        }
+      ]
+    }
+  ]
+}
