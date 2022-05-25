@@ -1,0 +1,172 @@
+{
+  "app-id": "com.github.dfaust.soundKonverter",
+  "runtime": "org.kde.Platform",
+  "runtime-version": "5.15-21.08",
+  "sdk": "org.kde.Sdk",
+  "command": "soundkonverter",
+  "finish-args": [
+    "--share=ipc",
+    "--share=network",
+    "--socket=wayland",
+    "--socket=fallback-x11",
+    "--socket=pulseaudio",
+    "--filesystem=xdg-music",
+    "--filesystem=/run/media",
+    "--filesystem=/media",
+    "--device=dri"
+  ],
+  "modules": [
+    {
+      "name": "kdelibs4support",
+      "buildsystem": "cmake-ninja",
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://download.kde.org/stable/frameworks/5.94/portingAids/kdelibs4support-5.94.0.tar.xz",
+          "sha256": "d726ebb00766d3d5ed39603601c4b9541659bebc4bb7b755eec25bffd8a76033",
+          "x-checker-data": {
+            "type": "anitya",
+            "project-id": 8762,
+            "stable-only": true,
+            "url-template": "https://download.kde.org/stable/frameworks/$major.$minor/portingAids/kdelibs4support-$version.tar.xz"
+          }
+        }
+      ]
+    },
+    {
+      "name": "libneon",
+      "config-opts": [
+        "--enable-shared",
+        "--with-gssapi",
+        "--with-libxml2"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "http://www.webdav.org/neon/neon-0.30.2.tar.gz",
+          "sha256": "db0bd8cdec329b48f53a6f00199c92d5ba40b0f015b153718d1b15d3d967fbca"
+        }
+      ]
+    },
+    {
+      "name": "libmusicbrainz",
+      "buildsystem": "cmake",
+      "config-opts": [
+        "-DBUILD_SHARED_LIBS=ON"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://github.com/metabrainz/libmusicbrainz/releases/download/release-5.1.0/libmusicbrainz-5.1.0.tar.gz",
+          "sha256": "6749259e89bbb273f3f5ad7acdffb7c47a2cf8fcaeab4c4695484cef5f4c6b46"
+        }
+      ]
+    },
+    {
+      "name": "libkcddb",
+      "buildsystem": "cmake-ninja",
+      "config-opts": [
+        "-DBUILD_TESTING=OFF"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://download.kde.org/stable/release-service/22.08.0/src/libkcddb-22.08.0.tar.xz",
+          "sha256": "9e1396fc330979ab593b4070abe81957cd862749f13d0ee3d1aadde7130bfc65",
+          "x-checker-data": {
+            "type": "anitya",
+            "project-id": 8763,
+            "stable-only": true,
+            "url-template": "https://download.kde.org/stable/release-service/$version/src/libkcddb-$version.tar.xz"
+          }
+        }
+      ]
+    },
+    {
+      "name": "cdparanoia",
+      "buildsystem": "simple",
+      "build-commands": [
+        "./configure --prefix=${FLATPAK_DEST}",
+        "make all slib",
+        "make install"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "http://downloads.xiph.org/releases/cdparanoia/cdparanoia-III-10.2.src.tgz",
+          "sha256": "005db45ef4ee017f5c32ec124f913a0546e77014266c6a1c50df902a55fe64df"
+        },
+        {
+          "type": "patch",
+          "path": "cdparanoia-use-proper-gnu-config-files.patch"
+        },
+        {
+          "type": "shell",
+          "commands": [
+            "cp /usr/share/automake-*/config.{sub,guess} ."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "taglib",
+      "buildsystem": "cmake-ninja",
+      "config-opts": [
+        "-DBUILD_SHARED_LIBS=ON",
+        "-DWITH_ASF=ON",
+        "-DWITH_MP4=ON",
+        "-DBUILD_TESTS=OFF",
+        "-DBUILD_EXAMPLES=OFF"
+      ],
+      "cleanup": [
+        "/include"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://taglib.org/releases/taglib-1.12.tar.gz",
+          "sha256": "7fccd07669a523b07a15bd24c8da1bbb92206cb19e9366c3692af3d79253b703"
+        }
+      ]
+    },
+    "shared-modules/vorbisgain/vorbisgain_0.37-2.json",
+    {
+      "name": "wavpack",
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://www.wavpack.com/wavpack-5.4.0.tar.bz2",
+          "sha256": "0716a6dcf9a72d61005e1b09bbbd61aaf49837cb4e4a351992a6daed16cac034"
+        }
+      ],
+      "cleanup": [
+        "*.la",
+        "*.a",
+        "/include",
+        "/share/man"
+      ]
+    },
+    {
+      "name": "soundkonverter",
+      "buildsystem": "cmake-ninja",
+      "subdir": "src",
+      "builddir": true,
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/dfaust/soundkonverter",
+          "tag": "v3.0.1",
+          "sha256": "aa20a5ad025cd30adaec16989ca4f8868da69f72",
+          "x-checker-data": {
+            "type": "git",
+            "tag-pattern": "^v([\d.]+)$"
+          }
+        },
+        {
+          "type": "patch",
+          "path": "taglib.patch"
+        }
+      ]
+    }
+  ]
+}
