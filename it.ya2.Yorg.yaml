@@ -17,6 +17,16 @@ modules:
   - scons.json
   - python3-bson.json
 
+  - name: assets
+    sources:
+    - type: archive # take the binary distribution to avoid compiling all 3D models from source
+      url: https://github.com/cflavio/yorg/releases/download/v0.11.0/yorg-0.11.1-linux-amd64.tar.gz
+      sha256: a17b65fb1adc8f65cf70cc8ba274f029c1277c9ac8ecf35d257a2ece627741fd
+    buildsystem: simple
+    build-commands:
+      - mkdir -p ${FLATPAK_DEST}/share/yorg/
+      - cp -r assets ${FLATPAK_DEST}/share/yorg/
+
   - name: yorg
     sources:
     - type: git
@@ -32,10 +42,8 @@ modules:
       path: yorg.appdata.xml
     buildsystem: simple
     build-commands:
-      - scons lang=1 images=1 tracks=1 -j ${FLATPAK_BUILDER_N_JOBS}
+      - scons lang=1 images=1 -j ${FLATPAK_BUILDER_N_JOBS}
     post-install:
-      - mkdir -p ${FLATPAK_DEST}/share/yorg/
-      - cp -r assets ${FLATPAK_DEST}/share/yorg/
       - cp -r menu ${FLATPAK_DEST}/share/yorg/
       - cp -r yorg ${FLATPAK_DEST}/share/yorg/
       - cp -r yracing ${FLATPAK_DEST}/share/yorg/
