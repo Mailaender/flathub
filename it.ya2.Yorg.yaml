@@ -17,6 +17,17 @@ modules:
   - scons.json
   - python3-bson.json
 
+  - name: compress
+    sources:
+    - type: git
+      url: https://github.com/vapier/ncompress.git
+      tag: v5.0
+      commit: e77a84ca5a69f01ccfe149e48d10ac563e6c375b
+    buildsystem: simple
+    build-commands:
+      - make -j${FLATPAK_BUILDER_N_JOBS}
+      - make DESTDIR=${FLATPAK_DEST} PREFIX=/usr install_core
+
   - name: assets
     sources:
     - type: archive # take the binary distribution to avoid compiling all 3D models from source
