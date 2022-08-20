@@ -1,0 +1,154 @@
+app-id: org.sigrok.PulseView
+runtime: org.kde.Platform
+runtime-version: 5.15-21.08
+sdk: org.kde.Sdk
+command: pulseview
+rename-icon: pulseview
+finish-args:
+  - --share=ipc
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --device=all
+cleanup:
+  - /include
+  - /lib/pkgconfig
+  - "*.la"
+
+modules:
+  - name: libzip
+    buildsystem: cmake-ninja
+    config-opts:
+    - -DCMAKE_BUILD_TYPE=Release
+    - -DCMAKE_INSTALL_LIBDIR=lib
+    cleanup:
+    - /bin
+    - /share
+    sources:
+    - type: archive
+      url: https://libzip.org/download/libzip-1.9.2.tar.xz
+      sha256: c93e9852b7b2dc931197831438fee5295976ee0ba24f8524a8907be5c2ba5937
+      x-checker-data:
+        type: anitya
+        project-id: 10649,
+        url-template: https://libzip.org/download/libzip-$version.tar.xz
+
+  - name: sigc++
+    config-opts:
+      - --disable-documentation
+    sources:
+      - sha256: 0b68dfc6313c6cc90ac989c6d722a1bf0585ad13846e79746aa87cb265904786
+        type: archive
+        url: http://ftp.gnome.org/pub/GNOME/sources/libsigc++/2.10/libsigc++-2.10.3.tar.xz
+
+  - name: glibmm
+    config-opts:
+      - --disable-documentation
+    sources:
+      - sha256: a75282e58d556d9b2bb44262b6f5fb76c824ac46a25a06f527108bec86b8d4ec
+        type: archive
+        url: http://ftp.gnome.org/pub/GNOME/sources/glibmm/2.64/glibmm-2.64.2.tar.xz
+
+  - name: libusb
+    sources:
+      - type: git
+        url: https://github.com/libusb/libusb.git
+        tag: v1.0.24
+        commit: c6a35c56016ea2ab2f19115d2ea1e85e0edae155
+
+  - name: libserialport
+    sources:
+      - type: archive
+        url: http://sigrok.org/download/source/libserialport/libserialport-0.1.1.tar.gz
+        sha256: 4a2af9d9c3ff488e92fb75b4ba38b35bcf9b8a66df04773eba2a7bbf1fa7529d
+
+  - name: libconfuse
+    sources:
+      - type: archive
+        url: https://github.com/libconfuse/libconfuse/archive/v3.3.tar.gz
+        sha256: cb90c06f2dbec971792af576d5b9a382fb3c4ca2b1deea55ea262b403f4e641e
+        x-checker-data:
+          type: anitya
+          project-id: 1581
+          url-template: https://github.com/libconfuse/libconfuse/archive/v$version.tar.gz
+
+  - name: libftdi
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DLIB_SUFFIX=
+      - -Wno-dev
+    sources:
+      - type: archive
+        url: https://www.intra2net.com/en/developer/libftdi/download/libftdi1-1.5.tar.bz2
+        sha256: 7c7091e9c86196148bd41177b4590dccb1510bfe6cea5bf7407ff194482eb049
+        x-checker-data:
+          type: anitya
+          project-id: 14622
+          url-template: https://www.intra2net.com/en/developer/libftdi/download/libftdi1-$version.tar.bz2
+
+  - name: libieee1284
+    config-opts:
+      - --disable-static
+      - --without-python
+    sources:
+      - type: archive
+        url: https://downloads.sourceforge.net/libieee1284/libieee1284-0.2.11.tar.bz2
+        sha256: 7730de107782e5d2b071bdcb5b06a44da74856f00ef4a9be85d1ba4806a38f1a
+      - type: shell
+        commands:
+          - cp -p /usr/share/automake-*/config.{sub,guess} .
+          - autoreconf -vfi
+
+  - name: libsigrok
+    buildsystem: autotools
+    config-opts:
+      - --disable-static
+      - --enable-fx2lafw
+    sources:
+      - type: archive
+        url: http://sigrok.org/download/source/libsigrok/libsigrok-0.5.2.tar.gz
+        sha256: 4d341f90b6220d3e8cb251dacf726c41165285612248f2c52d15df4590a1ce3c
+        x-checker-data:
+          type: anitya
+          project-id: 21369
+          stable-only: true
+          url-template": http://sigrok.org/download/source/libsigrok/libsigrok-$version.tar.gz
+
+  - name: libsigrokdecode
+    buildsystem: autotools
+    config-opts:
+      - --disable-static
+    sources:
+      - type: archive
+        url: https://sigrok.org/download/source/libsigrokdecode/libsigrokdecode-0.5.3.tar.gz
+        sha256: c50814aa6743cd8c4e88c84a0cdd8889d883c3be122289be90c63d7d67883fc0
+      - type: shell
+        commands:
+          - autoreconf -fiv
+
+  - name: boost
+    buildsystem: simple
+    build-commands:
+      - ./bootstrap.sh --prefix=${FLATPAK_DEST} --with-libraries=filesystem,serialization,system,test,thread
+      - ./b2 -j${FLATPAK_BUILDER_N_JOBS} install variant=release cxxstd=17 --layout=system
+    sources:
+      - type: archive
+        url: https://boostorg.jfrog.io/artifactory/main/release/1.69.0/source/boost_1_69_0.tar.bz2
+        sha256: 8f32d4617390d1c2d16f26a27ab60d97807b35440d45891fa340fc2648b04406
+
+  - name: pulseview
+    buildsystem: cmake
+    config-opts:
+      - -DDISABLE_WERROR=TRUE
+    post-install:
+      - install -m 644 -D icons/pulseview.png ${FLATPAK_DEST}/share/icons/hicolor/48x48/apps/pulseview.png
+      - install -m 644 -D icons/pulseview.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/pulseview.svg
+      - install -Dm644 contrib/org.sigrok.PulseView.desktop ${FLATPAK_DEST}/share/applications/org.sigrok.PulseView.desktop
+      - install -Dm644 contrib/org.sigrok.PulseView.appdata.xml ${FLATPAK_DEST}/share/metainfo/org.sigrok.PulseView.appdata.xml
+    sources:
+      - type: git
+        url: git://sigrok.org/pulseview.git
+        tag: pulseview-0.4.2
+        commit: 2b526a42a2fd68d513d4c2061790605a0c7add6c
+        x-checker-data:
+          type: git
+          tag-pattern: ^pulseview-([\d.]+)$
