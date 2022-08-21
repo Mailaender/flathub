@@ -1,0 +1,26 @@
+app-id: com.thedarkmod.TheDarkMod
+runtime: org.freedesktop.Platform
+runtime-version: 21.08
+sdk: org.freedesktop.Sdk
+command: thedarkmod
+finish-args:
+  - --socket=x11
+  - --share=ipc
+  - --share=network
+  - --device=dri
+  - --socket=pulseaudio
+
+modules:
+  - name: thedarkmod
+    buildsystem: cmake
+    config-opts:
+      - -DUCM_UNITY_BUILD=ON
+    post-install:
+      -
+    sources:
+      - type: file
+        url: https://www.thedarkmod.com/sources/thedarkmod.2.09.src.7z
+        sha256: 014954544f042e8742b692cb3984f7e18b3cdd0384e91d36dd30103b823b8b19
+      - type: shell
+        commands:
+          - bsdtar -xvf thedarkmod.2.09.src.7z
