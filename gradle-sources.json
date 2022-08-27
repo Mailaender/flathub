@@ -1,0 +1,471 @@
+[
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/ch/qos/logback/logback-classic/1.2.11/logback-classic-1.2.11.pom",
+		"sha256": "64e01794db4659829862a44574e066bf6940678fb1657e26668bf6414596244d",
+		"dest": "maven-local/ch/qos/logback/logback-classic/1.2.11",
+		"dest-filename": "logback-classic-1.2.11.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/ch/qos/logback/logback-classic/1.2.11/logback-classic-1.2.11.jar",
+		"sha256": "4d8e899621a3006c2f66e19feab002b11e6cfc5cb1854fc41f01532c00deb2aa",
+		"dest": "maven-local/ch/qos/logback/logback-classic/1.2.11",
+		"dest-filename": "logback-classic-1.2.11.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/ch/qos/logback/logback-parent/1.2.11/logback-parent-1.2.11.pom",
+		"sha256": "c3c0f80dfb31aa922f8c60fe22c24b04eee41aa9a17466cdd85d81474196d1ef",
+		"dest": "maven-local/ch/qos/logback/logback-parent/1.2.11",
+		"dest-filename": "logback-parent-1.2.11.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/ch/qos/logback/logback-core/1.2.11/logback-core-1.2.11.pom",
+		"sha256": "53074a2590e0d64da5bd5b09cfe4a9c1cfcbf987e503940e8184ee39fe855d14",
+		"dest": "maven-local/ch/qos/logback/logback-core/1.2.11",
+		"dest-filename": "logback-core-1.2.11.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/ch/qos/logback/logback-core/1.2.11/logback-core-1.2.11.jar",
+		"sha256": "6ce1e9397be8298a2e99029f55f955c6fa3cef255171c554d0b9c201cffd0159",
+		"dest": "maven-local/ch/qos/logback/logback-core/1.2.11",
+		"dest-filename": "logback-core-1.2.11.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/google/gradle/osdetector-gradle-plugin/1.7.0/osdetector-gradle-plugin-1.7.0.pom",
+		"sha256": "e81632c2ee9aa48e7ecf0547512c1c386560c0d46a958ee50550f7ebddf13517",
+		"dest": "maven-local/com/google/gradle/osdetector-gradle-plugin/1.7.0",
+		"dest-filename": "osdetector-gradle-plugin-1.7.0.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/google/gradle/osdetector-gradle-plugin/1.7.0/osdetector-gradle-plugin-1.7.0.jar",
+		"sha256": "dbda2178c14ed6b93a184b1acbf38d72107002252668c111cf411eca37e41ca6",
+		"dest": "maven-local/com/google/gradle/osdetector-gradle-plugin/1.7.0",
+		"dest-filename": "osdetector-gradle-plugin-1.7.0.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.pom",
+		"sha256": "19889dbdf1b254b2601a5ee645b8147a974644882297684c798afe5d63d78dfe",
+		"dest": "maven-local/com/google/code/findbugs/jsr305/3.0.2",
+		"dest-filename": "jsr305-3.0.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar",
+		"sha256": "766ad2a0783f2687962c8ad74ceecc38a28b9f72a2d085ee438b7813e928d0c7",
+		"dest": "maven-local/com/google/code/findbugs/jsr305/3.0.2",
+		"dest-filename": "jsr305-3.0.2.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/google/guava/guava/31.1-jre/guava-31.1-jre.pom",
+		"sha256": "9193d07bf4f660108d7358e58b27d21b44e34e80d6734e98e21916376f270de2",
+		"dest": "maven-local/com/google/guava/guava/31.1-jre",
+		"dest-filename": "guava-31.1-jre.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/google/guava/guava/31.1-jre/guava-31.1-jre.jar",
+		"sha256": "a42edc9cab792e39fe39bb94f3fca655ed157ff87a8af78e1d6ba5b07c4a00ab",
+		"dest": "maven-local/com/google/guava/guava/31.1-jre",
+		"dest-filename": "guava-31.1-jre.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/google/guava/guava-parent/31.1-jre/guava-parent-31.1-jre.pom",
+		"sha256": "4439626783b44ad25ef05ff07621dd4bb796cc4eb4f2966a4a461fea4130e0fc",
+		"dest": "maven-local/com/google/guava/guava-parent/31.1-jre",
+		"dest-filename": "guava-parent-31.1-jre.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/google/guava/guava-parent/26.0-android/guava-parent-26.0-android.pom",
+		"sha256": "f8698ab46ca996ce889c1afc8ca4f25eb8ac6b034dc898d4583742360016cc04",
+		"dest": "maven-local/com/google/guava/guava-parent/26.0-android",
+		"dest-filename": "guava-parent-26.0-android.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.pom",
+		"sha256": "e96042ce78fecba0da2be964522947c87b40a291b5fd3cd672a434924103c4b9",
+		"dest": "maven-local/com/google/guava/failureaccess/1.0.1",
+		"dest-filename": "failureaccess-1.0.1.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar",
+		"sha256": "a171ee4c734dd2da837e4b16be9df4661afab72a41adaf31eb84dfdaf936ca26",
+		"dest": "maven-local/com/google/guava/failureaccess/1.0.1",
+		"dest-filename": "failureaccess-1.0.1.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.pom",
+		"sha256": "18d4b1db26153d4e55079ce1f76bb1fe05cdb862ef9954a88cbcc4ff38b8679b",
+		"dest": "maven-local/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava",
+		"dest-filename": "listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar",
+		"sha256": "b372a037d4230aa57fbeffdef30fd6123f9c0c2db85d0aced00c91b974f33f99",
+		"dest": "maven-local/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava",
+		"dest-filename": "listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/google/j2objc/j2objc-annotations/1.3/j2objc-annotations-1.3.pom",
+		"sha256": "5faca824ba115bee458730337dfdb2fcea46ba2fd774d4304edbf30fa6a3f055",
+		"dest": "maven-local/com/google/j2objc/j2objc-annotations/1.3",
+		"dest-filename": "j2objc-annotations-1.3.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/google/j2objc/j2objc-annotations/1.3/j2objc-annotations-1.3.jar",
+		"sha256": "21af30c92267bd6122c0e0b4d20cccb6641a37eaf956c6540ec471d584e64a7b",
+		"dest": "maven-local/com/google/j2objc/j2objc-annotations/1.3",
+		"dest-filename": "j2objc-annotations-1.3.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.11.0/error_prone_annotations-2.11.0.pom",
+		"sha256": "0261ca01f2d2e9ac2ae2ece75d42c56323b385fb294b6bc943f62ef4e92ddf08",
+		"dest": "maven-local/com/google/errorprone/error_prone_annotations/2.11.0",
+		"dest-filename": "error_prone_annotations-2.11.0.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.11.0/error_prone_annotations-2.11.0.jar",
+		"sha256": "721cb91842b46fa056847d104d5225c8b8e1e8b62263b993051e1e5a0137b7ec",
+		"dest": "maven-local/com/google/errorprone/error_prone_annotations/2.11.0",
+		"dest-filename": "error_prone_annotations-2.11.0.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/google/errorprone/error_prone_parent/2.11.0/error_prone_parent-2.11.0.pom",
+		"sha256": "8283f0cb44c624a79d330b6fd80b8b8a715a68b3685c9a951c3de837d4540551",
+		"dest": "maven-local/com/google/errorprone/error_prone_parent/2.11.0",
+		"dest-filename": "error_prone_parent-2.11.0.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/miglayout/miglayout-swing/11.0/miglayout-swing-11.0.pom",
+		"sha256": "4bcf911339bb5e06a5015d3280e8ea39cc914401211267533bf9873d4b507764",
+		"dest": "maven-local/com/miglayout/miglayout-swing/11.0",
+		"dest-filename": "miglayout-swing-11.0.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/miglayout/miglayout-swing/11.0/miglayout-swing-11.0.jar",
+		"sha256": "7aa9da079e0ed628a3672f8ddd1b6b05a5a3ec27639f82370956748943989ba6",
+		"dest": "maven-local/com/miglayout/miglayout-swing/11.0",
+		"dest-filename": "miglayout-swing-11.0.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/miglayout/miglayout-parent/11.0/miglayout-parent-11.0.pom",
+		"sha256": "a72c99a1272ce4cbdbc3b6ca491087c7b91d0bd5816766550f7850d8550a2813",
+		"dest": "maven-local/com/miglayout/miglayout-parent/11.0",
+		"dest-filename": "miglayout-parent-11.0.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/miglayout/miglayout-core/11.0/miglayout-core-11.0.pom",
+		"sha256": "8d511f09e5c6ff2fcf19989483e1af45f710989333b64ef43116f0ecf76e7967",
+		"dest": "maven-local/com/miglayout/miglayout-core/11.0",
+		"dest-filename": "miglayout-core-11.0.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/miglayout/miglayout-core/11.0/miglayout-core-11.0.jar",
+		"sha256": "812b9c8a8f326098a43eb9550229dd31100c49f81680eecdf6649da423f0be9f",
+		"dest": "maven-local/com/miglayout/miglayout-core/11.0",
+		"dest-filename": "miglayout-core-11.0.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/kr/motd/maven/os-maven-plugin/1.7.0/os-maven-plugin-1.7.0.pom",
+		"sha256": "c4f56a8eeaa5269efa05db01e3130905ff5bdb87eb2ae3e766154e9aea183ba6",
+		"dest": "maven-local/kr/motd/maven/os-maven-plugin/1.7.0",
+		"dest-filename": "os-maven-plugin-1.7.0.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/kr/motd/maven/os-maven-plugin/1.7.0/os-maven-plugin-1.7.0.jar",
+		"sha256": "943053501a429e53d1c4d62152eec125fa36620e0dc66b7390a895097cfdeace",
+		"dest": "maven-local/kr/motd/maven/os-maven-plugin/1.7.0",
+		"dest-filename": "os-maven-plugin-1.7.0.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://plugins.gradle.org/m2/org/openjfx/javafxplugin/org.openjfx.javafxplugin.gradle.plugin/0.0.13/org.openjfx.javafxplugin.gradle.plugin-0.0.13.pom",
+		"sha256": "484e6c604b9ae3fe852a10a1fdab3a143e834bc2fd182a3bdee4331462189089",
+		"dest": "maven-local/org/openjfx/javafxplugin/org.openjfx.javafxplugin.gradle.plugin/0.0.13",
+		"dest-filename": "org.openjfx.javafxplugin.gradle.plugin-0.0.13.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://plugins.gradle.org/m2/org/openjfx/javafx-plugin/0.0.13/javafx-plugin-0.0.13.pom",
+		"sha256": "ff7e192f259235e1345d5fa656e1a038113bf837ac09cb13366d4437c908af7f",
+		"dest": "maven-local/org/openjfx/javafx-plugin/0.0.13",
+		"dest-filename": "javafx-plugin-0.0.13.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://plugins.gradle.org/m2/org/openjfx/javafx-plugin/0.0.13/javafx-plugin-0.0.13.jar",
+		"sha256": "8be002a8bc723e1fcdb87b1e740d81046977ef103b698ecc963460d914744b22",
+		"dest": "maven-local/org/openjfx/javafx-plugin/0.0.13",
+		"dest-filename": "javafx-plugin-0.0.13.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2.pom",
+		"sha256": "bac56c345c886a5c0a66b51a34d1bbf0df67d341048bda9e7b328521c5286c93",
+		"dest": "maven-local/org/openjfx/javafx-base/17.0.2",
+		"dest-filename": "javafx-base-17.0.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2.jar",
+		"sha256": "453e4ad3467094f3fcc0c2b6037994cb067593f91922a20207580a7f3d53b71c",
+		"dest": "maven-local/org/openjfx/javafx-base/17.0.2",
+		"dest-filename": "javafx-base-17.0.2.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2-linux.jar",
+		"sha256": "5706c25523a3130a030f867ee53a7c1a2cad4d1c4242dcc6df0fb2c1242ea5f8",
+		"dest": "maven-local/org/openjfx/javafx-base/17.0.2",
+		"dest-filename": "javafx-base-17.0.2-linux.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/openjfx/javafx/17.0.2/javafx-17.0.2.pom",
+		"sha256": "36141bab55bddc9be6d54ecdce326b11d5c59d44b50c4f623a96b05d42e538ab",
+		"dest": "maven-local/org/openjfx/javafx/17.0.2",
+		"dest-filename": "javafx-17.0.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/openjfx/javafx-graphics/17.0.2/javafx-graphics-17.0.2.pom",
+		"sha256": "4ebdf85dd57acdb50bafcc23bef67e17363a04ed229b8a6ae34fd59fd1930a27",
+		"dest": "maven-local/org/openjfx/javafx-graphics/17.0.2",
+		"dest-filename": "javafx-graphics-17.0.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/openjfx/javafx-graphics/17.0.2/javafx-graphics-17.0.2.jar",
+		"sha256": "6c8df43a15129977cb3cd98faf30eecbf29a52d18862cefbd28428fa132a1847",
+		"dest": "maven-local/org/openjfx/javafx-graphics/17.0.2",
+		"dest-filename": "javafx-graphics-17.0.2.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/openjfx/javafx-graphics/17.0.2/javafx-graphics-17.0.2-linux.jar",
+		"sha256": "3c5f2a59910e8f22628592d23bdae5714ad4554d99433ca8a0f085b940b0d18f",
+		"dest": "maven-local/org/openjfx/javafx-graphics/17.0.2",
+		"dest-filename": "javafx-graphics-17.0.2-linux.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/openjfx/javafx-controls/17.0.2/javafx-controls-17.0.2.pom",
+		"sha256": "607115b41e773d18f7bc17f767e19ca86e313bae15dfdea5f78720de306918fa",
+		"dest": "maven-local/org/openjfx/javafx-controls/17.0.2",
+		"dest-filename": "javafx-controls-17.0.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/openjfx/javafx-controls/17.0.2/javafx-controls-17.0.2.jar",
+		"sha256": "d7c94677a4e1bd68c7686081233b3d0426a0d345dfedef9d45adb19c31ec2672",
+		"dest": "maven-local/org/openjfx/javafx-controls/17.0.2",
+		"dest-filename": "javafx-controls-17.0.2.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/openjfx/javafx-controls/17.0.2/javafx-controls-17.0.2-linux.jar",
+		"sha256": "8eaaebd5a8b413ca8cfcf7638d7e6693190a880c74079584fb1af8426d64e67b",
+		"dest": "maven-local/org/openjfx/javafx-controls/17.0.2",
+		"dest-filename": "javafx-controls-17.0.2-linux.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/openjfx/javafx-fxml/17.0.2/javafx-fxml-17.0.2.pom",
+		"sha256": "e81b4ec51c85fedffa7c001cd48fe670074da0df60de4408b9b438c4e1ae4b6c",
+		"dest": "maven-local/org/openjfx/javafx-fxml/17.0.2",
+		"dest-filename": "javafx-fxml-17.0.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/openjfx/javafx-fxml/17.0.2/javafx-fxml-17.0.2-linux.jar",
+		"sha256": "f0b7fc6b80f9c70e1332ddb38f01a7ee6acaa567aaa54283cd6ec95e929adf32",
+		"dest": "maven-local/org/openjfx/javafx-fxml/17.0.2",
+		"dest-filename": "javafx-fxml-17.0.2-linux.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/openjfx/javafx-media/17.0.2/javafx-media-17.0.2.pom",
+		"sha256": "e6423b6cdd4fd5767ba834116fcaee1d7d0a7aaea1a12a1eaf10e249cdee4a71",
+		"dest": "maven-local/org/openjfx/javafx-media/17.0.2",
+		"dest-filename": "javafx-media-17.0.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/openjfx/javafx-media/17.0.2/javafx-media-17.0.2.jar",
+		"sha256": "dec1f1c645df549bfb453f34c074bd9cbcdb7441a0568630f4d2b52b3915f9fd",
+		"dest": "maven-local/org/openjfx/javafx-media/17.0.2",
+		"dest-filename": "javafx-media-17.0.2.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/openjfx/javafx-media/17.0.2/javafx-media-17.0.2-linux.jar",
+		"sha256": "e07660feb7e1288c172b9120da8bef869e18716f5222bdf1392e18f03264b569",
+		"dest": "maven-local/org/openjfx/javafx-media/17.0.2",
+		"dest-filename": "javafx-media-17.0.2-linux.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/openjfx/javafx-swing/17.0.2/javafx-swing-17.0.2.pom",
+		"sha256": "d4aa550b7ec7dc6aebac34966e0f2594589aa4ebee5c63eff9d633faf6de3318",
+		"dest": "maven-local/org/openjfx/javafx-swing/17.0.2",
+		"dest-filename": "javafx-swing-17.0.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/openjfx/javafx-swing/17.0.2/javafx-swing-17.0.2-linux.jar",
+		"sha256": "2f71bcc34d5a1efb710ab3e6142bdfab9882537dda0c456234d7bb107aedbc71",
+		"dest": "maven-local/org/openjfx/javafx-swing/17.0.2",
+		"dest-filename": "javafx-swing-17.0.2-linux.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/openjfx/javafx-web/17.0.2/javafx-web-17.0.2.pom",
+		"sha256": "1e28d0c8a32284c5e99e237440fa0e208511bf6507a78d6f83a53d58d4fde6ce",
+		"dest": "maven-local/org/openjfx/javafx-web/17.0.2",
+		"dest-filename": "javafx-web-17.0.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/openjfx/javafx-web/17.0.2/javafx-web-17.0.2-linux.jar",
+		"sha256": "4ff2d7ef199ef34c8bc58f2683248fe9311cc8448231b23f05b2c7966faf2f83",
+		"dest": "maven-local/org/openjfx/javafx-web/17.0.2",
+		"dest-filename": "javafx-web-17.0.2-linux.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://plugins.gradle.org/m2/org/javamodularity/moduleplugin/1.8.10/moduleplugin-1.8.10.pom",
+		"sha256": "6df2fdf85b9e5a2fbfcba0a00ffac044f3485640d84f97e98008fb30a3e9c59d",
+		"dest": "maven-local/org/javamodularity/moduleplugin/1.8.10",
+		"dest-filename": "moduleplugin-1.8.10.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://plugins.gradle.org/m2/org/javamodularity/moduleplugin/1.8.10/moduleplugin-1.8.10.jar",
+		"sha256": "5253fe7e7640b8cd9dc624658a53d187e3fb5582e58e0f49f9b87aeaf531edb0",
+		"dest": "maven-local/org/javamodularity/moduleplugin/1.8.10",
+		"dest-filename": "moduleplugin-1.8.10.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/sonatype/oss/oss-parent/9/oss-parent-9.pom",
+		"sha256": "fb40265f982548212ff82e362e59732b2187ec6f0d80182885c14ef1f982827a",
+		"dest": "maven-local/org/sonatype/oss/oss-parent/9",
+		"dest-filename": "oss-parent-9.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/sonatype/oss/oss-parent/7/oss-parent-7.pom",
+		"sha256": "b51f8867c92b6a722499557fc3a1fdea77bdf9ef574722fe90ce436a29559454",
+		"dest": "maven-local/org/sonatype/oss/oss-parent/7",
+		"dest-filename": "oss-parent-7.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/jooq/joor/0.9.13/joor-0.9.13.pom",
+		"sha256": "9105d34daa35bbebc34c3a238e2cd0f975849823665ba65799f826033005bf4b",
+		"dest": "maven-local/org/jooq/joor/0.9.13",
+		"dest-filename": "joor-0.9.13.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/jooq/joor/0.9.13/joor-0.9.13.jar",
+		"sha256": "4c64dcec5c3350d74527b8fb64647df63673cb272a7e34a9f3575d6e01315c3b",
+		"dest": "maven-local/org/jooq/joor/0.9.13",
+		"dest-filename": "joor-0.9.13.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.pom",
+		"sha256": "fb046a9c229437928bb11c2d27c8b5d773eb8a25e60cbd253d985210dedc2684",
+		"dest": "maven-local/org/slf4j/slf4j-api/1.7.36",
+		"dest-filename": "slf4j-api-1.7.36.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar",
+		"sha256": "d3ef575e3e4979678dc01bf1dcce51021493b4d11fb7f1be8ad982877c16a1c0",
+		"dest": "maven-local/org/slf4j/slf4j-api/1.7.36",
+		"dest-filename": "slf4j-api-1.7.36.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/slf4j/slf4j-parent/1.7.36/slf4j-parent-1.7.36.pom",
+		"sha256": "bb388d37fbcdd3cde64c3cede21838693218dc451f04040c5df360a78ed7e812",
+		"dest": "maven-local/org/slf4j/slf4j-parent/1.7.36",
+		"dest-filename": "slf4j-parent-1.7.36.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/apache/commons/commons-math3/3.6.1/commons-math3-3.6.1.pom",
+		"sha256": "fad72336ea7d7dd06da103144e3740db508fa4b17d9c54d7847737edc24a7e60",
+		"dest": "maven-local/org/apache/commons/commons-math3/3.6.1",
+		"dest-filename": "commons-math3-3.6.1.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/apache/commons/commons-math3/3.6.1/commons-math3-3.6.1.jar",
+		"sha256": "1e56d7b058d28b65abd256b8458e3885b674c1d588fa43cd7d1cbb9c7ef2b308",
+		"dest": "maven-local/org/apache/commons/commons-math3/3.6.1",
+		"dest-filename": "commons-math3-3.6.1.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/apache/commons/commons-parent/39/commons-parent-39.pom",
+		"sha256": "87cd27e1a02a5c3eb6d85059ce98696bb1b44c2b8b650f0567c86df60fa61da7",
+		"dest": "maven-local/org/apache/commons/commons-parent/39",
+		"dest-filename": "commons-parent-39.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/apache/apache/16/apache-16.pom",
+		"sha256": "9f85ff2fd7d6cb3097aa47fb419ee7f0ebe869109f98aba9f4eca3f49e74a40e",
+		"dest": "maven-local/org/apache/apache/16",
+		"dest-filename": "apache-16.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/checkerframework/checker-qual/3.12.0/checker-qual-3.12.0.pom",
+		"sha256": "775b7ae36e62820b3b86dc1aa39af37c0ac4b85ff48f7fe485a922a2790f46b9",
+		"dest": "maven-local/org/checkerframework/checker-qual/3.12.0",
+		"dest-filename": "checker-qual-3.12.0.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/checkerframework/checker-qual/3.12.0/checker-qual-3.12.0.module",
+		"sha256": "d047949c1b81091c2c3913771fac2f32a2fa549ba3d5d548cc8c0b6dfa493777",
+		"dest": "maven-local/org/checkerframework/checker-qual/3.12.0",
+		"dest-filename": "checker-qual-3.12.0.module"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/checkerframework/checker-qual/3.12.0/checker-qual-3.12.0.jar",
+		"sha256": "ff10785ac2a357ec5de9c293cb982a2cbb605c0309ea4cc1cb9b9bc6dbe7f3cb",
+		"dest": "maven-local/org/checkerframework/checker-qual/3.12.0",
+		"dest-filename": "checker-qual-3.12.0.jar"
+	}
+]

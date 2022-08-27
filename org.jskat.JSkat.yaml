@@ -1,0 +1,40 @@
+app-id: org.jskat.JSkat
+runtime: org.freedesktop.Platform
+runtime-version: '21.08'
+sdk: org.freedesktop.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.openjdk17
+command: jskat
+finish-args:
+  - --socket=x11
+  - --share=ipc
+  - --share=network
+  - --env=PATH=/usr/bin:/app/bin:/app/jre/bin
+  - --env=JAVA_HOME=/app/jre
+  - --env=JAVAFX_HOME=/app/share/openjfx/lib
+
+build-options:
+  env:
+    JAVA_HOME: /usr/lib/sdk/openjdk17/
+
+modules:
+  - name: openjdk
+    buildsystem: simple
+    build-commands:
+      - /usr/lib/sdk/openjdk17/install.sh
+
+  - name: jskat
+    buildsystem: simple
+    build-commands:
+      - source /usr/lib/sdk/openjdk17/enable.sh && gradle clean assembleDist
+    sources:
+      - type: git
+        url: https://github.com/b0n541/jskat-multimodule.git
+        tag: v0.21.0
+        commit: 63cf7d041b2194010b7fccc18a895bfc8ac3ed43
+      - type: shell
+        commands:
+          - sed -i "s/mavenCentral/mavenLocal/g" build.gradle.kts
+      - gradle-sources.json
+      - type: file
+        path: settings.xml
