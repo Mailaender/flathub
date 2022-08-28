@@ -1,0 +1,100 @@
+- type: file
+  dest: lib/ivy/
+  url: https://repo1.maven.org/maven2/org/apache/ivy/ivy/2.2.0/ivy-2.2.0.jar
+  sha1: f9d1e83e82fc085093510f7d2e77d81d52bc2081
+
+- type: file
+  url: https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar
+  sha1: 25ea2e8b0c338a877313bd4672d3fe056ea78f0d
+  dest: .ivy2/local/com.google.code.findbugs/jsr305/3.0.2/jars/
+  dest-filename: jsr305.jar
+
+- type: file
+  url: https://repo1.maven.org/maven2/junit/junit/4.12/junit-4.12.jar
+  sha1: 2973d150c0dc1fefe998f834810d68f278ea58ec
+  dest: .ivy2/local/junit/junit/4.12/jars/
+  dest-filename: junit.jar
+
+- type: file
+  url: https://repo1.maven.org/maven2/org/mockito/mockito-junit-jupiter/3.3.3/mockito-junit-jupiter-3.3.3.jar
+  sha1: 1176ce43cf773e11a5a318ff04e57e55f9187347
+  dest: .ivy2/local/org.mockito/mockito-junit-jupiter/3.3.3/jars/
+  dest-filename: mockito-junit-jupiter.jar
+
+- type: file
+  url: https://repo1.maven.org/maven2/org/mockito/mockito-junit-jupiter/3.3.3/mockito-junit-jupiter-3.3.3-javadoc.jar
+  sha1: 4667227ef244eaab63896f4372f6dc73cee7f4b8
+  dest: .ivy2/local/org.mockito/mockito-junit-jupiter/3.3.3/jars/
+  dest-filename: mockito-junit-jupiter-javadoc.jar
+
+- type: file
+  url: https://repo1.maven.org/maven2/org/hamcrest/hamcrest-library/2.1/hamcrest-library-2.1.jar
+  sha1: 42edeb45e615925992d79263e9e744a857cfbcd0
+  dest: .ivy2/local/org.hamcrest/hamcrest-library/2.1/jars/
+  dest-filename: hamcrest-library.jar
+
+- type: file
+  url: https://repo1.maven.org/maven2/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar
+  sha1: 943cd5c8802b2a3a64a010efb86ec19bac142e40
+  dest: .ivy2/local/ant-contrib/ant-contrib/1.0b3/jars/
+  dest-filename: ant-contrib.jar
+
+- type: file
+  url: https://repo1.maven.org/maven2/saxon/saxon/6.5.3/saxon-6.5.3.jar
+  sha1: 2c4d29d52d0ae2335f3670b94e0a7412f446e948
+  dest: .ivy2/local/saxon/saxon/6.5.3/jars/
+  dest-filename: saxon.jar
+
+- type: file
+  url: https://repo1.maven.org/maven2/net/sf/docbook/docbook-xsl/1.79.1/docbook-xsl-1.79.1-resources.zip
+  sha1: 88b728f3defeaa8cca51d337082654f333ed6418
+  dest: .ivy2/local/net.sf.docbook/docbook-xsl/1.79.1/zips/
+  dest-filename: docbook-xsl.zip
+
+- type: file
+  url: https://repo1.maven.org/maven2/net/sf/docbook/docbook-xsl-saxon/1.0.0/docbook-xsl-saxon-1.0.0.jar
+  sha1: 32f506d5d18d814536b64f41f01f59fd7acf1b77
+  dest: .ivy2/local/net.sf.docbook/docbook-xsl-saxon/1.0.0/jars/
+  dest-filename: docbook-xsl-saxon.jar
+
+- type: file
+  url: https://repo1.maven.org/maven2/xerces/xercesImpl/2.12.0/xercesImpl-2.12.0.jar
+  sha1: f02c844149fd306601f20e0b34853a670bef7fa2
+  dest: .ivy2/local/xerces/xercesImpl/2.12.0/jars/
+  dest-filename: xercesImpl.jar
+
+- type: file
+  url: https://repo1.maven.org/maven2/org/apache/xmlgraphics/fop/2.3/fop-2.3.jar
+  sha1: 03e29d7693cdda2053db86bdedabb1beccc83f6f
+  dest: .ivy2/local/org.apache.xmlgraphics/fop/2.3/jars/
+  dest-filename: fop.jar
+
+- type: file
+  url: https://repo1.maven.org/maven2/bsf/bsf/2.4.0/bsf-2.4.0.jar
+  sha1: 658f324024bb473c4d15d18b855676fa817353e9
+  dest: .ivy2/local/bsf/bsf/2.4.0/jars/
+  dest-filename: bsf.jar
+
+- type: file
+  url: https://repo1.maven.org/maven2/org/beanshell/bsh/2.0b5/bsh-2.0b5.jar
+  sha1: fdc2ab6ae8b53e0d4761b296c116df747cd85199
+  dest: .ivy2/local/org.beanshell/bsh/2.0b5/jars/
+  dest-filename: bsh.jar
+
+- type: file
+  url: https://repo1.maven.org/maven2/org/bouncycastle/bcpg-jdk15on/1.62/bcpg-jdk15on-1.62.jar
+  sha1: f8ca06c266064f75354658d1b4c464da3532e358
+  dest: .ivy2/local/org.bouncycastle/bcpg-jdk15on/1.62/jars/
+  dest-filename: bcpg-jdk15on.jar
+
+- type: file
+  url: https://repo1.maven.org/maven2/com/evolvedbinary/appbundler/appbundler/1.0.4/appbundler-1.0.4.jar
+  sha1: d93ee30bbd28625da2dd5f001769a091b1070a60
+  dest: .ivy2/local/com.evolvedbinary.appbundler/appbundler/1.0.4/jars/
+  dest-filename: appbundler.jar
+
+- type: file
+  url: https://repo1.maven.org/maven2/net/sf/launch4j/launch4j/3.12/launch4j-3.12-core.jar
+  sha1: 4875b6b68631a9d8c8e87cd7fc36784c7af1a873
+  dest: .ivy2/local/net.sf.launch4j/launch4j/3.12/jars/
+  dest-filename: launch4j.jar
