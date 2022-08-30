@@ -20,23 +20,10 @@ modules:
   - name: compress
     sources:
     - type: git
-      url: https://github.com/vapier/ncompress.git
-      tag: v5.0
-      commit: e77a84ca5a69f01ccfe149e48d10ac563e6c375b
-    buildsystem: simple
-    build-commands:
-      - make -j${FLATPAK_BUILDER_N_JOBS}
-      - make DESTDIR=${FLATPAK_DEST} PREFIX=/usr install_core
-
-  - name: assets
-    sources:
-    - type: archive # take the binary distribution to avoid compiling all 3D models from source
-      url: https://github.com/cflavio/yorg/releases/download/v0.11.0/yorg-0.11.1-linux-amd64.tar.gz
-      sha256: a17b65fb1adc8f65cf70cc8ba274f029c1277c9ac8ecf35d257a2ece627741fd
-    buildsystem: simple
-    build-commands:
-      - mkdir -p ${FLATPAK_DEST}/share/yorg/
-      - cp -r assets ${FLATPAK_DEST}/share/yorg/
+      url: https://github.com/castano/nvidia-texture-tools.git
+      tag: 2.1.2
+      commit: b1a90f36013522b9e5a3a2197859b72188752e3f
+    buildsystem: cmake-ninja
 
   - name: yorg
     sources:
