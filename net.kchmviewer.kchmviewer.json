@@ -1,0 +1,96 @@
+{
+  "app-id": "net.kchmviewer.kchmviewer",
+  "runtime": "org.kde.Platform",
+  "runtime-version": "5.15-21.08",
+  "base": "io.qt.qtwebengine.BaseApp",
+  "base-version": "5.15-21.08",
+  "sdk": "org.kde.Sdk",
+  "command": "kchmviewer",
+  "rename-desktop-file": "kchmviewer.desktop",
+  "finish-args": [
+    "--share=ipc",
+    "--socket=wayland",
+    "--socket=fallback-x11",
+    "--filesystem=home"
+  ],
+  "cleanup": [
+    "/include"
+  ],
+  "modules": [
+    {
+      "name": "libzip",
+      "buildsystem": "cmake-ninja",
+      "cleanup": [
+        "/include",
+        "/bin",
+        "/share",
+        "/lib/pkgconfig",
+        "/lib/*.la"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://libzip.org/download/libzip-1.9.2.tar.xz",
+          "sha256": "c93e9852b7b2dc931197831438fee5295976ee0ba24f8524a8907be5c2ba5937"
+        }
+      ]
+    },
+    {
+      "name": "chmlib",
+      "cleanup": [
+        "/include",
+        "*.a"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "http://www.jedrea.com/chmlib/chmlib-0.40.tar.bz2",
+          "sha256": "3449d64b0cf71578b2c7e3ddc048d4af3661f44a83941ea074a7813f3a59ffa3"
+        }
+      ]
+    },
+    {
+      "name": "kchmviewer",
+      "buildsystem": "qmake",
+      "build-options": {
+        "env": [
+          "QMAKEPATH=/app/lib"
+        ]
+      },
+      "config-opts": [
+        "QMAKE_INCDIR += /app/include/QtWebEngine",
+        "QMAKE_INCDIR += /app/include/QtWebEngineCore",
+        "QMAKE_INCDIR += /app/include/QtWebEngineWidgets"
+      ],
+      "post-install": [
+        "install -Dp -m 0755 bin/kchmviewer ${FLATPAK_DEST}/bin/kchmviewer",
+        "install -Dp -m 0644 packages/kchmviewer.desktop ${FLATPAK_DEST}/share/applications/kchmviewer.desktop",
+        "install -Dp -m 0644 packages/kchmviewer.png ${FLATPAK_DEST}/share/pixmaps/kchmviewer.png"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/gyunaev/kchmviewer.git",
+          "tag": "RELEASE_8_0",
+          "commit": "308a2aa975c7ab15129301d6462855127a8ff735"
+        },
+        {
+          "type": "patch",
+          "path": "url-scheme.patch"
+        },
+        {
+          "type": "patch",
+          "path": "gcc-linker.patch"
+        },
+        {
+          "type": "patch",
+          "path": "no-webkit.patch"
+        },
+        {
+          "type": "patch",
+          "path": "qtwebengine.patch"
+        }
+      ]
+    }
+  ]
+}
