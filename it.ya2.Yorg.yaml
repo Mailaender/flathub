@@ -29,8 +29,8 @@ modules:
     sources:
     - type: git
       url: https://github.com/cflavio/yorg.git
-      tag: v0.11.0.post0
-      commit: d398bf20a50f87de52b6649b7fb087a1db19398b
+      tag: v0.11.0.post1
+      commit: cc70560c1de8c25e0a155101cabd7e788cc2b4fd
       x-checker-data:
         type: git
         tag-pattern: ^([\d.]+)$
