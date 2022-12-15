@@ -1,5 +1,5 @@
 {
-  "app-id": "com.github.dfaust.soundKonverter",
+  "app-id": "io.github.dfaust.soundKonverter",
   "runtime": "org.kde.Platform",
   "runtime-version": "5.15-21.08",
   "sdk": "org.kde.Sdk",
@@ -71,8 +71,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://download.kde.org/stable/release-service/22.08.0/src/libkcddb-22.08.0.tar.xz",
-          "sha256": "9e1396fc330979ab593b4070abe81957cd862749f13d0ee3d1aadde7130bfc65",
+          "url": "https://download.kde.org/stable/release-service/22.12.0/src/libkcddb-22.12.0.tar.xz",
+          "sha256": "5150623351c9be4f4a0c44a3e33475650627accd5d9d3d4cfcc74e115fe0d4d4",
           "x-checker-data": {
             "type": "anitya",
             "project-id": 8763,
@@ -124,8 +124,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://taglib.org/releases/taglib-1.12.tar.gz",
-          "sha256": "7fccd07669a523b07a15bd24c8da1bbb92206cb19e9366c3692af3d79253b703"
+          "url": "https://taglib.org/releases/taglib-1.13.tar.gz",
+          "sha256": "58f08b4db3dc31ed152c04896ee9172d22052bc7ef12888028c01d8b1d60ade0"
         }
       ]
     },
@@ -151,6 +151,7 @@
       "buildsystem": "cmake-ninja",
       "subdir": "src",
       "builddir": true,
+      "config-opts": "-DKF5_BUILD=ON",
       "sources": [
         {
           "type": "git",
@@ -163,8 +164,10 @@
           }
         },
         {
-          "type": "patch",
-          "path": "taglib.patch"
+          "type": "shell",
+          "commands": [
+            "sed 's|<fileref.h|<taglib/fileref.h>|' src/metadata/MetaReplayGain.h"
+          ]
         }
       ]
     }
