@@ -1,0 +1,130 @@
+app-id: gov.nih.nlm.ncbi.gbench
+runtime: org.freedesktop.Platform
+runtime-version: 22.08
+sdk: org.freedesktop.Sdk
+command: gbench
+rename-desktop-file: gbench.desktop
+rename-appdata-file: gbench.metainfo.xml
+rename-icon: gbench
+finish-args:
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --share=ipc
+  - --device=dri
+  - --socket=pulseaudio
+  - --share=network
+
+modules:
+  - shared-modules/glu/glu-9.json
+  - shared-modules/glew/glew.json
+
+  - name: wxWidgets
+    buildsystem: autotools
+    config-opts:
+      - --with-opengl
+      - --enable-shared
+      - --disable-monolithic
+      - --enable-sockets
+      - --enable-unicode
+      - --enable-filesystem
+      - --enable-fs_inet
+    cleanup:
+      - /bin
+      - /include
+      - /lib/wx/include
+    sources:
+      - type: git
+        url: https://github.com/wxWidgets/wxWidgets.git
+        tag: v3.1.3
+        commit: 8a40d23b27ed1c80b5a2ca9f7e8461df4fbc1a31
+
+  - name: boost
+    buildsystem: simple
+    build-commands:
+      - ./bootstrap.sh --prefix=/app --with-libraries=regex,system,chrono,iostreams,program_options,serialization,test,thread
+      - ./b2 -j $FLATPAK_BUILDER_N_JOBS install
+    sources:
+      - type: archive
+        url: https://boostorg.jfrog.io/artifactory/main/release/1.76.0/source/boost_1_76_0.tar.gz
+        sha256: 7bd7ddceec1a1dfdcbdb3e609b60d01739c38390a5f956385a12f3122049f0ca
+
+  - name: vdb
+    buildsystem: autotools
+    sources:
+      - type: git
+        url: https://github.com/ncbi/ncbi-vdb.git
+        tag: 3.0.2
+        commit: c4aa19632714c2f04af07505721fb16c71bba3d5
+
+  - name: lzo
+    config-opts:
+      - --enable-shared
+      - --disable-static
+    cleanup:
+      - /include
+      - /lib/*.la
+      - /lib/pkgconfig
+      - /share
+    sources:
+      - type: archive
+        url: https://www.oberhumer.com/opensource/lzo/download/lzo-2.10.tar.gz
+        sha256: c0f892943208266f9b6543b3ae308fab6284c5c90e627931446fb49b4221a072
+
+  - name: libdb
+    buildsystem: simple
+    subdir: build_unix
+    build-commands:
+    - "../dist/configure --prefix=/app --enable-compat185 --enable-dbm --disable-static --enable-cxx"
+    - make
+    - make install
+    sources:
+    - type: archive
+      url: https://download.oracle.com/berkeley-db/db-6.2.23.tar.gz
+      sha256: 47612c8991aa9ac2f6be721267c8d3cdccf5ac83105df8e50809daea24e95dc7
+
+  - name: ftgl
+    buildsystem: autotools
+    config-opts:
+      - --disable-static
+    sources:
+    - type: git
+      url: https://github.com/frankheckenbach/ftgl/
+      tag: v2.4.0
+      commit: 483639219095ad080538e07ceb5996de901d4e74
+
+  - name: libuv
+    buildsystem: autotools
+    sources:
+    - type: archive
+      url: https://dist.libuv.org/dist/v1.44.2/libuv-v1.44.2.tar.gz
+      sha256: ccfcdc968c55673c6526d8270a9c8655a806ea92468afcbcabc2b16040f03cb4
+
+  - name: gbench
+    buildsystem: autotools
+    config-opts:
+      - --with-dll
+      - --with-mt
+      - --with-gbench
+      - --with-vdb=/app
+      - --with-boost
+      - --with-libxml
+      - --with-libxslt
+      - --with-sqlite3
+      - --with-lzo
+      - --with-ftgl
+      - --with-wxwidgets=/app
+      - --with-wxwidgets-ucs
+      - --with-projects=scripts/projects/ncbi_gbench.lst
+      - --without-glew-mx
+      - --with-bin-release
+      - --with-runpath=/app/lib
+      - --without-sybase
+      - --with-flat-makefile
+      - --without-caution
+      - --without-internal
+      - --with-libuv
+      - --with-nghttp2
+    sources:
+      - type: archive
+        url: https://ftp.ncbi.nlm.nih.gov/toolbox/gbench/ver-3.8.2/gbench-src-3.8.2.tar.gz
+        sha256: da68fa4e747fc1eac1a55005128bc4505c030b64f7f492473ad9863dcc637b30
