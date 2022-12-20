@@ -1,0 +1,54 @@
+app-id: io.github.Andrettin.Wyrmsun
+runtime: org.freedesktop.Platform
+runtime-version: 22.08
+sdk: org.freedesktop.Sdk
+command: glob2
+rename-icon: glob2
+rename-desktop-file: glob2.desktop
+finish-args:
+  - --device=dri
+  - --share=ipc
+  - --share=network
+  - --socket=x11
+  - --socket=pulseaudio
+
+modules:
+  - shared-modules/SDL/sdl12-compat.json
+  - shared-modules/SDL/SDL_image-1.2.12.json
+  - shared-modules/SDL/SDL_net-1.2.8.json
+  - shared-modules/SDL/SDL_ttf-2.0.11.json
+
+  - shared-modules/python2.7/python-2.7.json
+
+  - name: scons
+    buildsystem: simple
+    build-commands:
+      - /app/bin/python setup.py install --prefix=/app
+    sources:
+      - type: archive
+        url: https://downloads.sourceforge.net/project/scons/scons/2.5.1/scons-2.5.1.tar.gz
+        sha256: 0b25218ae7b46a967db42f2a53721645b3d42874a65f9552ad16ce26d30f51f2
+
+  - name: boost
+    buildsystem: simple
+    build-commands:
+      - ./bootstrap.sh --prefix=${FLATPAK_DEST} --with-libraries=date_time,thread
+      - ./b2 -j${FLATPAK_BUILDER_N_JOBS} install variant=release cxxstd=11 --layout=system
+    sources:
+      - type: archive
+        url: https://boostorg.jfrog.io/artifactory/main/release/1.81.0/source/boost_1_81_0.tar.bz2
+        sha256: 71feeed900fbccca04a3b4f2f84a7c217186f28a940ed8b7ed4725986baf99fa
+
+  - name: glob2
+    buildsystem: simple
+    build-commands:
+      - scons --portaudio=true BINDIR=/app/bin INSTALLDIR=/app/share -j${FLATPAK_BUILDER_N_JOBS}
+      - scons --portaudio=true BINDIR=/app/bin INSTALLDIR=/app/share install
+    sources:
+      - type: archive
+        url: https://download.savannah.nongnu.org/releases/glob2/0.9.4/glob2-0.9.4.4.tar.gz
+        sha256: 0f4d898ec6b05ce27b4a12ef242cc26571304b90d2509932a4743c71311314b8
+      - type: shell
+        commands:
+          - chmod -x {src/*.h,src/*.cpp,libgag/include/*.h,gnupg/*,libgag/src/*.cpp,scripts/*,data/*.txt,campaigns/*,COPYING,README}
+
