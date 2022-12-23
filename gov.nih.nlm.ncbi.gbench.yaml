@@ -41,12 +41,12 @@ modules:
   - name: boost
     buildsystem: simple
     build-commands:
-      - ./bootstrap.sh --prefix=/app --with-libraries=regex,system,chrono,iostreams,program_options,serialization,test,thread
+      - ./bootstrap.sh --prefix=/app --with-libraries=regex,system,chrono,iostreams,program_options,serialization,test,thread,filesystem
       - ./b2 -j $FLATPAK_BUILDER_N_JOBS install
     sources:
       - type: archive
-        url: https://boostorg.jfrog.io/artifactory/main/release/1.76.0/source/boost_1_76_0.tar.gz
-        sha256: 7bd7ddceec1a1dfdcbdb3e609b60d01739c38390a5f956385a12f3122049f0ca
+        url: https://downloads.sourceforge.net/boost/boost/1.53.0/boost_1_53_0.tar.bz2
+        sha256: f88a041b01882b0c9c5c05b39603ec8383fb881f772f6f9e6e6fd0e0cddb9196
 
   - name: vdb
     buildsystem: autotools
@@ -71,16 +71,23 @@ modules:
         sha256: c0f892943208266f9b6543b3ae308fab6284c5c90e627931446fb49b4221a072
 
   - name: libdb
-    buildsystem: simple
-    subdir: build_unix
-    build-commands:
-    - "../dist/configure --prefix=/app --enable-compat185 --enable-dbm --disable-static --enable-cxx"
-    - make
-    - make install
+    subdir: dist
+    builddir: true
+    config-opts:
+      - --enable-compat185
+      - --enable-shared
+      - --enable-cxx
+      - --enable-dbm
+      - --enable-stl
     sources:
-    - type: archive
-      url: https://download.oracle.com/berkeley-db/db-6.2.23.tar.gz
-      sha256: 47612c8991aa9ac2f6be721267c8d3cdccf5ac83105df8e50809daea24e95dc7
+      - type: archive
+        url: https://download.oracle.com/berkeley-db/db-5.3.28.tar.gz
+        sha256: e0a992d740709892e81f9d93f06daf305cf73fb81b545afe72478043172c3628
+      - type: patch
+        path: atomic.patch
+      - type: shell
+        commands:
+          - cp -p /usr/share/automake-*/config.{sub,guess} dist
 
   - name: ftgl
     buildsystem: autotools
@@ -101,17 +108,18 @@ modules:
 
   - name: gbench
     buildsystem: autotools
+    builddir: build
     config-opts:
       - --with-dll
       - --with-mt
       - --with-gbench
       - --with-vdb=/app
-      - --with-boost
+      - --with-boost=/app
       - --with-libxml
       - --with-libxslt
       - --with-sqlite3
       - --with-lzo
-      - --with-ftgl
+      - --with-ftgl=/app
       - --with-wxwidgets=/app
       - --with-wxwidgets-ucs
       - --with-projects=scripts/projects/ncbi_gbench.lst
@@ -122,7 +130,7 @@ modules:
       - --with-flat-makefile
       - --without-caution
       - --without-internal
-      - --with-libuv
+      - --with-libuv=/app
       - --with-nghttp2
     sources:
       - type: archive
