@@ -4,6 +4,9 @@
   "runtime-version": "5.15-21.08",
   "sdk": "org.kde.Sdk",
   "command": "soundkonverter",
+  "rename-icon": "soundkonverter",
+  "rename-desktop-file": "soundkonverter.desktop",
+  "rename-appdata-file": "soundkonverter.appddata.xml",
   "finish-args": [
     "--share=ipc",
     "--share=network",
@@ -14,6 +17,12 @@
     "--filesystem=/run/media",
     "--filesystem=/media",
     "--device=dri"
+  ],
+  "cleanup": [
+    "*.la",
+    "*.a",
+    "/include",
+    "/share/man"
   ],
   "modules": [
     {
@@ -84,12 +93,7 @@
     },
     {
       "name": "cdparanoia",
-      "buildsystem": "simple",
-      "build-commands": [
-        "./configure --prefix=${FLATPAK_DEST}",
-        "make all slib",
-        "make install"
-      ],
+      "buildsystem": "autotools",
       "sources": [
         {
           "type": "archive",
@@ -101,31 +105,41 @@
           "path": "cdparanoia-use-proper-gnu-config-files.patch"
         },
         {
+          "type": "patch",
+          "path": "010_build_system.patch"
+        },
+        {
+          "type": "patch",
+          "path": "cdparanoia-III-ide_majors.patch",
+          "strip-components": 0
+        },
+        {
+          "type": "patch",
+          "path": "cdparanoia-III-c++.patch",
+          "strip-components": 0
+        },
+        {
+          "type": "patch",
+          "path": "050_all_build_only_shared_libraries.patch",
+          "strip-components": 0
+        },
+        {
+          "type": "patch",
+          "path": "cdparanoia-III-01-typos-and-spelling.dpatch"
+        },
+        {
+          "type": "patch",
+          "path": "cdparanoia-III-05-gcc4.3.dpatch"
+        },
+        {
+          "type": "patch",
+          "path": "cdparanoia-III-06-endian.dpatch"
+        },
+        {
           "type": "shell",
           "commands": [
             "cp /usr/share/automake-*/config.{sub,guess} ."
           ]
-        }
-      ]
-    },
-    {
-      "name": "taglib",
-      "buildsystem": "cmake-ninja",
-      "config-opts": [
-        "-DBUILD_SHARED_LIBS=ON",
-        "-DWITH_ASF=ON",
-        "-DWITH_MP4=ON",
-        "-DBUILD_TESTS=OFF",
-        "-DBUILD_EXAMPLES=OFF"
-      ],
-      "cleanup": [
-        "/include"
-      ],
-      "sources": [
-        {
-          "type": "archive",
-          "url": "https://taglib.org/releases/taglib-1.13.tar.gz",
-          "sha256": "58f08b4db3dc31ed152c04896ee9172d22052bc7ef12888028c01d8b1d60ade0"
         }
       ]
     },
@@ -138,12 +152,6 @@
           "url": "https://www.wavpack.com/wavpack-5.4.0.tar.bz2",
           "sha256": "0716a6dcf9a72d61005e1b09bbbd61aaf49837cb4e4a351992a6daed16cac034"
         }
-      ],
-      "cleanup": [
-        "*.la",
-        "*.a",
-        "/include",
-        "/share/man"
       ]
     },
     {
@@ -152,22 +160,22 @@
       "subdir": "src",
       "builddir": true,
       "config-opts": "-DKF5_BUILD=ON",
+      "post-install": [
+        "install -Dm644 ../../soundkonverter128.png ${FLATPAK_DEST}/share/icons/hicolor/128x128/apps/soundkonverter.png"
+      ],
       "sources": [
         {
           "type": "git",
           "url": "https://github.com/dfaust/soundkonverter",
-          "tag": "v3.0.1",
-          "sha256": "aa20a5ad025cd30adaec16989ca4f8868da69f72",
-          "x-checker-data": {
-            "type": "git",
-            "tag-pattern": "^v([\d.]+)$"
-          }
+          "commit": "ca9583660e5a7c02052aecd2e64a99e5011a8699"
         },
         {
-          "type": "shell",
-          "commands": [
-            "sed 's|<fileref.h|<taglib/fileref.h>|' src/metadata/MetaReplayGain.h"
-          ]
+          "type": "patch",
+          "path": "appstream.patch"
+        },
+        {
+          "type": "file",
+          "path": "soundkonverter128.png"
         }
       ]
     }

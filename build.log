@@ -1,0 +1,39 @@
+Emptying app dir 'build-dir/'
+Downloading sources
+Fetching full git repo https://github.com/dfaust/soundkonverter
+Starting build of io.github.dfaust.soundKonverter
+Cache hit for kdelibs4support, skipping build
+Cache hit for libneon, skipping build
+Cache hit for libmusicbrainz, skipping build
+Cache hit for libkcddb, skipping build
+Cache miss, checking out last cache hit
+========================================================================
+Building module cdparanoia in /home/matthias/Entwicklung/Flathub/flathub/.flatpak-builder/build/cdparanoia-5
+========================================================================
+Applying patch cdparanoia-use-proper-gnu-config-files.patch
+patching file configure
+patching file configure.in
+Applying patch 010_build_system.patch
+patching file interface/Makefile.in
+patching file Makefile.in
+patching file paranoia/Makefile.in
+Applying patch cdparanoia-III-ide_majors.patch
+patching file interface/scan_devices.c
+Hunk #1 succeeded at 179 (offset 2 lines).
+Applying patch cdparanoia-III-c++.patch
+patching file utils.h
+Applying patch 050_all_build_only_shared_libraries.patch
+patching file Makefile.in
+Applying patch cdparanoia-III-01-typos-and-spelling.dpatch
+patching file cdparanoia.1
+patching file main.c
+Applying patch cdparanoia-III-05-gcc4.3.dpatch
+patching file interface/cdda_interface.h
+patching file interface/cooked_interface.c
+patching file interface/interface.c
+patching file interface/scan_devices.c
+patching file interface/scsi_interface.c
+patching file interface/test_interface.c
+Applying patch cdparanoia-III-06-endian.dpatch
+patching file interface/interface.c
+Running: ./configure --prefix=${FLATPAK_DEST}
