@@ -1,0 +1,223 @@
+{
+    "app-id": "org.rigsofrods.RigsOfRods",
+    "runtime": "org.freedesktop.Platform",
+    "runtime-version": "22.08",
+    "sdk": "org.freedesktop.Sdk",
+    "finish-args": [
+        "--device=all",
+        "--share=ipc",
+        "--share=network",
+        "--socket=x11",
+        "--socket=pulseaudio"
+    ],
+    "command": "rigsofrods",
+    "rename-desktop-file": "rigsofrods.desktop",
+    "rename-icon": "rigsofrods",
+    "cleanup": [
+        "/include",
+        "/lib/pkgconfig",
+        "/share/aclocal",
+        "/share/doc",
+        "/share/man",
+        "*.la", "*.a"
+    ],
+    "modules": [
+        "shared-modules/glu/glu-9.json",
+        {
+            "name": "libXmu",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://www.x.org/releases/individual/lib/libXmu-1.1.4.tar.gz",
+                    "sha256": "3091d711cdc1d8ea0f545a13b90d1464c3c3ab64778fd121f0d789b277a80289"
+                }
+            ]
+        },
+        {
+            "name": "libXaw",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://www.x.org/releases/individual/lib/libXaw-1.0.14.tar.bz2",
+                    "sha256": "76aef98ea3df92615faec28004b5ce4e5c6855e716fa16de40c32030722a6f8e"
+                }
+            ]
+        },
+        {
+            "name": "xrandr",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://xorg.freedesktop.org/archive/individual/app/xrandr-1.5.1.tar.xz",
+                    "sha256": "7bc76daf9d72f8aff885efad04ce06b90488a1a169d118dea8a2b661832e8762"
+                }
+            ]
+        },
+        {
+            "name": "nvidia-cg-toolkit",
+            "buildsystem": "simple",
+            "build-commands": [
+                "mkdir -p ${FLATPAK_DEST}/lib",
+                "install -m 0644 usr/lib64/libCg.so ${FLATPAK_DEST}/lib",
+                "install -m 0644 usr/lib64/libCgGL.so ${FLATPAK_DEST}/lib"
+            ],
+            "sources": [
+                {
+                "type": "archive",
+                "url": "http://developer.download.nvidia.com/cg/Cg_3.1/Cg-3.1_April2012_x86_64.tgz",
+                "sha256": "e8ff01e6cc38d1b3fd56a083f5860737dbd2f319a39037528fb1a74a89ae9878"
+                }
+            ]
+        },
+        {
+            "name": "zziplib",
+            "buildsystem": "cmake",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/gdraheim/zziplib",
+                    "tag": "v0.13.72",
+                    "commit": "7f8e01b5fa7f076bbe4f026d6a30160272da69fe"
+                }
+            ]
+        },
+        {
+            "name": "OGRE",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DOGRE_RESOURCEMANAGER_STRICT=0",
+                "-DOGRE_BUILD_DEPENDENCIES=OFF",
+                "-DOGRE_BUILD_SAMPLES=OFF",
+                "-DOGRE_BUILD_TESTS=OFF",
+                "-DOGRE_BUILD_RENDERSYSTEM_GL3PLUS=OFF",
+                "-DOGRE_BUILD_TOOLS=OFF",
+                "-DOGRE_BUILD_COMPONENT_JAVA=OFF",
+                "-DOGRE_BUILD_COMPONENT_CSHARP=OFF",
+                "-DOGRE_BUILD_COMPONENT_PYTHON=OFF",
+                "-DOGRE_BUILD_PLUGIN_BSP=OFF",
+                "-DOGRE_BUILD_PLUGIN_PCZ=OFF",
+                "-DOGRE_BUILD_COMPONENT_HLMS=OFF",
+                "-DOGRE_BUILD_COMPONENT_VOLUME=OFF"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/OGRECave/ogre",
+                    "tag": "v1.11.6",
+                    "commit": "3fc7c8e8e95204894865576d2b45cd4606d6d262"
+                }
+            ]
+        },
+        {
+            "name": "Boost",
+            "buildsystem": "simple",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://sourceforge.net/projects/boost/files/boost/1.80.0/boost_1_80_0.tar.bz2",
+                    "sha256": "1e19565d82e43bc59209a168f5ac899d3ba471d55c7610c677d4ccf2c9c500c0"
+                }
+            ],
+            "build-commands": [
+                "./bootstrap.sh --prefix=/app --with-libraries=system,filesystem,thread,wave",
+                "./b2 install variant=release link=shared runtime-link=shared -j $FLATPAK_BUILDER_N_JOBS"
+            ]
+        },
+        {
+            "name": "OIS",
+            "buildsystem": "cmake",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/wgois/OIS/",
+                    "tag": "v1.5.1",
+                    "commit": "6edb487cccb54d59e5b0fff86549d5eef475dea6"
+                }
+            ]
+        },
+        {
+            "name": "MyGUI",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DMYGUI_BUILD_DEMOS=OFF",
+                "-DMYGUI_BUILD_TOOLS=OFF"
+            ],
+            "build-options": {
+                "cxxflags": "-L/app/lib -lboost_system",
+                "ldflags": "-L/app/lib -lboost_system"
+            },
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/MyGUI/mygui/",
+                    "tag": "MyGUI3.4.0",
+                    "commit": "42594b05f87f9cfa6ade9fe4c296ec49b2c9982e"
+                }
+            ]
+        },
+        {
+            "name": "Caelum",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DCaelum_BUILD_SAMPLES=OFF",
+                "-DINSTALL_OGRE_PLUGIN=OFF"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/RigsOfRods/ogre-caelum",
+                    "commit": "70fcf62f306288c9472cc03a42367c9625c839ea"
+                }
+            ]
+        },
+        {
+            "name": "PagedGeometry",
+            "buildsystem": "cmake-ninja",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/RigsOfRods/ogre-pagedgeometry",
+                    "commit": "9b4ee07dd7a884c667fc4051523b26b746bbd2c7"
+                }
+            ]
+        },
+        {
+            "name": "SocketW",
+            "buildsystem": "cmake-ninja",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/RigsOfRods/socketw",
+                    "commit": "35cd91e18dfa14419879b737b7d01dacdf39e610"
+                }
+            ]
+        },
+        {
+            "name": "Angelscript",
+            "buildsystem": "cmake-ninja",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/AnotherFoxGuy/angelscript",
+                    "tag": "2.35.1",
+                    "commit": "39d73b9e5e728c997019ec02cbbfa5bef9cf59e0"
+                }
+            ]
+        },
+        {
+            "name": "Rigs of Rods",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DROR_FORCE_SYSTEM_DEPENDENCIES=ON"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/RigsOfRods/rigs-of-rods/",
+                    "tag": "2022.12",
+                    "commit": "aab166cafd9f5612941c1fbd39e4c64de3cbc7d9"
+                }
+            ]
+        }
+    ]
+}
