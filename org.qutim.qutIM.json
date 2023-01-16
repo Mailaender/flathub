@@ -1,0 +1,59 @@
+{
+  "id": "org.qutim.qutIM",
+  "runtime": "org.kde.Platform",
+  "runtime-version": "5.15-21.08",
+  "sdk": "org.kde.Sdk",
+  "command": "qutim",
+  "finish-args": [
+    "--device=dri",
+    "--share=ipc",
+    "--share=network",
+    "--socket=wayland",
+    "--socket=fallback-x11",
+    "--socket=pulseaudio"
+  ],
+  "modules": [
+    {
+      "name": "libotr",
+      "config-opts": [
+        "--disable-static"
+      ],
+      "cleanup": [
+        "/bin",
+        "/lib/pkgconfig",
+        "/include",
+        "/share",
+        "/lib/*.la"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://otr.cypherpunks.ca/libotr-4.1.1.tar.gz",
+          "sha256": "8b3b182424251067a952fb4e6c7b95a21e644fbb27fbd5f8af2b2ed87ca419f5",
+          "x-checker-data": {
+            "type": "anitya",
+            "project-id": 13303,
+            "stable-only": true,
+            "url-template": "https://otr.cypherpunks.ca/libotr-$version.tar.gz"
+          }
+        }
+      ]
+    },
+    {
+      "name": "qutim",
+      "buildsystem": "simple",
+      "post-install": [
+        "qbs build debug profile:${pkgname} project.addressSanitizer:true indicator.condition:false offtherecord.condition:true",
+        "install -Dm775 bin/qutim ${FLATPAK_DEST}/bin/qutim"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/euroelessar/qutim",
+          "tag": "v0.3.3",
+          "commit": "186fe9841abe15b57bb6f8104d5e653008b4c66f"
+        }
+      ]
+    }
+  ]
+}
