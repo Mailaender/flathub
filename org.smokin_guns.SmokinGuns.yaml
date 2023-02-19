@@ -1,0 +1,47 @@
+app-id: org.smokin_guns.SmokinGuns
+runtime: org.freedesktop.Platform
+runtime-version: 22.08
+sdk: org.freedesktop.Sdk
+command: smokinguns
+rename-icon: smokinguns
+rename-desktop-file: smokinguns.desktop
+finish-args:
+  - --socket=pulseaudio
+  - --socket=x11
+  - --share=ipc
+  - --share=network
+  - --device=dri
+  - --persist=.smokinguns
+
+modules:
+  - shared-modules/glu/glu-9.json
+  - shared-modules/SDL/sdl12-compat.json
+
+  - name: smokinguns
+    buildsystem: simple
+    build-commands:
+      - make DEFAULT_BASEDIR=${FLATPAK_DEST}/share/smokinguns -j${FLATPAK_BUILDER_N_JOBS}
+      - mkdir -p ${FLATPAK_DEST}/bin
+      - install -d ${FLATPAK_DEST}/share/smokinguns/baseq3
+      - install -m644 baseq3/* ${FLATPAK_DEST}/share/smokinguns/baseq3
+      - install -d smokinguns ${FLATPAK_DEST}/share/smokinguns/smokinguns
+      - install -m644 smokinguns/* ${FLATPAK_DEST}/share/smokinguns/smokinguns
+      - make copyfiles COPYBINDIR=${FLATPAK_DEST}/bin COPYDIR=${FLATPAK_DEST}/share NO_STRIP=1
+      - mv ${FLATPAK_DEST}/bin/smokinguns_dedicated.* ${FLATPAK_DEST}/bin/smokinguns_dedicated
+      - mv ${FLATPAK_DEST}/bin/smokinguns.* ${FLATPAK_DEST}/bin/smokinguns
+      - chmod a+wr ${FLATPAK_DEST}/bin/ ${FLATPAK_DEST}/share/smokinguns/smokinguns
+      - install -Dm644 smokinguns.desktop ${FLATPAK_DEST}/share/applications/smokinguns.desktop
+      - install -Dm644 misc/smokinguns.png ${FLATPAK_DEST}/share/icons/hicolor/256x256/apps/smokinguns.png
+    sources:
+      - type: git
+        url: https://github.com/smokin-guns/SmokinGuns.git
+        tag: v1.1
+        commit: 633725a6276cf2ab1be878d37fde0c953e79668a
+      - type: shell
+        commands:
+          - rm COPYING.txt id-readme.txt README voip-readme.txt # duplicates
+      - type: archive
+        url: http://download.smokin-guns.org/Smokin_Guns_1.1.zip
+        sha256: 575b26742c27fb7edcf6a7e6f9ac14bbed5f8c7e9cf214cdd86659cd3fac6004
+      - type: file
+        path: smokinguns.desktop
