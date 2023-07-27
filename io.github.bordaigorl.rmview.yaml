@@ -1,0 +1,36 @@
+app-id: io.github.bordaigorl.rmview
+runtime: org.kde.Platform
+runtime-version: '6.5'
+sdk: org.kde.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.rust-stable
+base: com.riverbankcomputing.PyQt.BaseApp
+base-version: '6.5'
+cleanup-commands:
+  - /app/cleanup-BaseApp.sh
+build-options:
+  append-path: /usr/lib/sdk/rust-stable/bin
+  env:
+    - BASEAPP_REMOVE_WEBENGINE=1
+finish-args:
+  - --env=QTWEBENGINEPROCESS_PATH=/app/bin/QtWebEngineProcess
+
+modules:
+  - python3-setuptools_rust.json
+  - python3-paramiko.json
+  - python3-twisted.json
+  - python3-pyjwt.json
+  - python3-service-identity.json
+  - python3-pyopenssl.json
+  - python3-sshtunnel.json
+
+  - name: rmview
+    buildsystem: simple
+    build-commands:
+      - python3 setup.py build
+      - python3 setup.py install --prefix=/app --root=/
+    sources:
+      - type: git
+        url: https://github.com/bordaigorl/rmview.git
+        branch: v3.1.2
+        commit: 7fbcc7cc7495d7bf7a9e0fbd07d7020b77366e44
