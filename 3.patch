@@ -1,0 +1,24 @@
+--- a/MANIFEST.in
++++ b/MANIFEST.in
+@@ -4,8 +4,8 @@
+ include mygnuhealth/images/*.svg
+ include mygnuhealth/*.py
+
+-include org.kde.mygnuhealth.metainfo.xml
+-include org.kde.mygnuhealth.desktop
++include org.gnuhealth.mygnuhealth.appdata.xml
++include org.gnuhealth.mygnuhealth.desktop
+
+ include bin/mygnuhealth
+
+--- a/setup.py
++++ b/setup.py
+@@ -52,7 +52,7 @@
+     include_package_data=True,
+     zip_safe=False,
+     data_files=[
+-        ('share/applications', ['org.kde.mygnuhealth.desktop']),
++        ('share/applications', ['org.gnuhealth.mygnuhealth.desktop']),
+         ('share/doc/mygnuhealth', ['doc/mygnuhealth.rst']),
+         ('share/doc/mygnuhealth/images', glob('doc/images/*', recursive=True)),
+         ('share/metainfo', ['org.gnuhealth.mygnuhealth.appdata.xml']),

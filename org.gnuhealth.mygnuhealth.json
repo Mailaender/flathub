@@ -1,0 +1,352 @@
+{
+    "id": "org.gnuhealth.mygnuhealth",
+    "runtime": "org.kde.Platform",
+    "runtime-version": "5.15-22.08",
+    "sdk": "org.kde.Sdk",
+    "sdk-extensions": [
+        "org.freedesktop.Sdk.Extension.llvm14"
+    ],
+    "command": "mygnuhealth",
+    "finish-args": [
+        "--share=ipc",
+        "--socket=fallback-x11",
+        "--socket=wayland",
+        "--device=dri"
+    ],
+    "rename-icon": "mygnuhealth",
+    "modules": [
+        {
+            "name": "PySide2",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "build-options": {
+                "prepend-path": "/usr/lib/sdk/llvm14/bin",
+                "prepend-ld-library-path": "/usr/lib/sdk/llvm14/lib"
+            },
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DBUILD_TESTS=OFF"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://download.qt.io/official_releases/QtForPython/pyside2/PySide2-5.15.4-src/pyside-setup-opensource-src-5.15.4.tar.xz",
+                    "sha256": "3c68ed0def4111ef5d0641370306338d277ae8983a77eaf22f223ddd3a14450b"
+                },
+                {
+                    "type": "shell",
+                    "commands": [
+                        "mkdir -p /app/include/qt5tmp && cp -R /usr/include/Qt* /app/include/qt5tmp # https://bugreports.qt.io/broswse/PYSIDE-787",
+                        "sed -i 's|--include-paths=|--include-paths=/app/include/qt5tmp:|' sources/pyside2/cmake/Macros/PySideModules.cmake"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "python3-matplotlib",
+            "buildsystem": "simple",
+            "ensure-writable": [
+                "/lib/python*/site-packages/easy-install.pth"
+            ],
+            "build-commands": [
+                "sed -e 's|#system_freetype = False|system_freetype = True|' -e 's|#system_qhull = False|system_qhull = True|' setup.cfg.template > setup.cfg",
+                "python3 setup.py build",
+                "python3 setup.py install --prefix /app"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://files.pythonhosted.org/packages/source/m/matplotlib/matplotlib-3.3.3.tar.gz",
+                    "sha256": "b1b60c6476c4cfe9e5cf8ab0d3127476fd3d5f05de0f343a452badaad0e4bdec"
+                }
+            ],
+            "modules": [
+                {
+                    "name": "numpy",
+                    "buildsystem": "simple",
+                    "build-commands": [
+                        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"numpy\" --no-build-isolation"
+                    ],
+                    "sources": [
+                        {
+                            "type": "file",
+                            "url": "https://files.pythonhosted.org/packages/cf/7a/f68d1d658a0e68084097beb212fa9356fee7eabff8b57231cc4acb555b12/numpy-1.25.1.tar.gz",
+                            "sha256": "9a3a9f3a61480cc086117b426a8bd86869c213fc4072e606f01c4e4b66eb92bf"
+                        }
+                    ]
+                },
+                {
+                    "name": "python3-certifi",
+                    "buildsystem": "simple",
+                    "build-commands": [
+                        "pip3 install --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"certifi\" --no-build-isolation"
+                    ],
+                    "sources": [
+                        {
+                        "type": "file",
+                        "url": "https://files.pythonhosted.org/packages/06/a9/cd1fd8ee13f73a4d4f491ee219deeeae20afefa914dfb4c130cfc9dc397a/certifi-2020.12.5.tar.gz",
+                        "sha256": "1a4995114262bffbc2413b159f2a1a480c969de6e6eb13ee966d470af86af59c"
+                        }
+                    ]
+                },
+                {
+                    "name": "qhull",
+                    "cleanup": [
+                        "/bin"
+                    ],
+                    "buildsystem": "cmake-ninja",
+                    "config-opts": [
+                        "-DCMAKE_BUILD_TYPE=Release"
+                    ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://github.com/qhull/qhull/archive/v7.3.0.tar.gz",
+                            "sha256": "05a2311d8e6397c96802ee5a9d8db32b83dac7e42e2eb2cd81c5547c18e87de6"
+                        }
+                    ]
+                },
+                {
+                    "name": "python3-setuptools_scm",
+                    "buildsystem": "simple",
+                    "build-commands": [
+                        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"setuptools_scm\" --no-build-isolation"
+                    ],
+                    "sources": [
+                        {
+                            "type": "file",
+                            "url": "https://files.pythonhosted.org/packages/57/38/930b1241372a9f266a7df2b184fb9d4f497c2cef2e016b014f82f541fe7c/setuptools_scm-6.0.1.tar.gz",
+                            "sha256": "d1925a69cb07e9b29416a275b9fadb009a23c148ace905b2fb220649a6c18e92"
+                        }
+                    ]
+                },
+                {
+                    "name": "python3-python-dateutil",
+                    "buildsystem": "simple",
+                    "build-commands": [
+                        "python3 setup.py install --prefix=/app --root=/"
+                    ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://files.pythonhosted.org/packages/4c/c4/13b4776ea2d76c115c1d1b84579f3764ee6d57204f6be27119f13a61d0a9/python-dateutil-2.8.2.tar.gz",
+                            "sha256": "0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86"
+                        }
+                    ]
+                },
+                {
+                    "name": "pyparsing",
+                    "buildsystem": "simple",
+                    "build-commands": [
+                        "python3 setup.py install --prefix=/app --root=/"
+                    ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://files.pythonhosted.org/packages/c1/47/dfc9c342c9842bbe0036c7f763d2d6686bcf5eb1808ba3e170afdb282210/pyparsing-2.4.7.tar.gz",
+                            "sha256": "c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1"
+                        }
+                    ],
+                    "cleanup": [
+                        "/bin"
+                    ]
+                },
+                {
+                    "name": "python3-Pillow",
+                    "buildsystem": "simple",
+                    "build-commands": [
+                        "pip3 install --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"Pillow\" --no-build-isolation"
+                    ],
+                    "sources": [
+                        {
+                            "type": "file",
+                            "url": "https://files.pythonhosted.org/packages/21/23/af6bac2a601be6670064a817273d4190b79df6f74d8012926a39bc7aa77f/Pillow-8.2.0.tar.gz",
+                            "sha256": "a787ab10d7bb5494e5f76536ac460741788f1fbce851068d73a87ca7c35fc3e1"
+                        }
+                    ]
+                },
+                {
+                    "name": "kiwisolver",
+                    "buildsystem": "simple",
+                    "ensure-writable" : [
+                        "/lib/python*/site-packages/easy-install.pth"
+                    ],
+                    "build-commands": [
+                        "python3 setup.py build",
+                        "python3 setup.py install --prefix /app"
+                    ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://files.pythonhosted.org/packages/source/k/kiwisolver/kiwisolver-1.3.1.tar.gz",
+                            "sha256": "950a199911a8d94683a6b10321f9345d5a3a8433ec58b217ace979e18f16e248"
+                        }
+                    ],
+                    "modules": [
+                        {
+                            "name": "python3-cppy",
+                            "buildsystem": "simple",
+                            "build-commands": [
+                                "pip3 install --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"cppy\" --no-build-isolation"
+                            ],
+                            "sources": [
+                                {
+                                "type": "file",
+                                "url": "https://files.pythonhosted.org/packages/36/64/be592e84c443a70ea5dcfb1c30bfe6f10ba7d8eb05c2264c7ceca8498548/cppy-1.1.0.tar.gz",
+                                "sha256": "4eda6f1952054a270f32dc11df7c5e24b259a09fddf7bfaa5f33df9fb4a29642"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "cycler",
+                    "buildsystem": "simple",
+                    "ensure-writable" : [
+                        "/lib/python*/site-packages/easy-install.pth"
+                    ],
+                    "build-commands": [
+                        "python3 setup.py build",
+                        "python3 setup.py install --prefix /app"
+                    ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://files.pythonhosted.org/packages/source/c/cycler/cycler-0.10.0.tar.gz",
+                            "sha256": "cd7b2d1018258d7247a71425e9f26463dfb444d411c39569972f4ce586b0c9d8"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "bcrypt",
+            "buildsystem": "simple",
+            "ensure-writable" : [
+                "/lib/python*/site-packages/easy-install.pth"
+            ],
+            "build-commands": [
+                "python3 setup.py build",
+                "python3 setup.py install --prefix /app"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://files.pythonhosted.org/packages/source/b/bcrypt/bcrypt-3.2.0.tar.gz",
+                    "sha256": "5b93c1726e50a93a033c36e5ca7fdcd29a5c7395af50a6892f5d9e7c6cfbfb29"
+                }
+            ],
+            "modules": [
+                {
+                    "name": "pycparser",
+                    "buildsystem": "simple",
+                    "ensure-writable" : [
+                        "/lib/python*/site-packages/easy-install.pth"
+                    ],
+                    "build-commands": [
+                        "python3 setup.py build",
+                        "python3 setup.py install --prefix /app"
+                    ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://files.pythonhosted.org/packages/source/p/pycparser/pycparser-2.20.tar.gz",
+                            "sha256": "2d475327684562c3a96cc71adf7dc8c4f0565175cf86b6d7a404ff4c771f15f0"
+                        }
+                    ]
+                },
+                {
+                    "name": "cffi",
+                    "buildsystem": "simple",
+                    "ensure-writable" : [
+                        "/lib/python*/site-packages/easy-install.pth"
+                    ],
+                    "build-commands": [
+                        "python3 setup.py build",
+                        "python3 setup.py install --prefix /app"
+                    ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://files.pythonhosted.org/packages/source/c/cffi/cffi-1.14.4.tar.gz",
+                            "sha256": "1a465cbe98a7fd391d47dce4b8f7e5b921e6cd805ef421d04f5f66ba8f06086c"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "tinydb",
+            "buildsystem": "simple",
+            "ensure-writable" : [
+                "/lib/python*/site-packages/easy-install.pth"
+            ],
+            "build-commands": [
+                "python3 setup.py build",
+                "python3 setup.py install --prefix /app"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://files.pythonhosted.org/packages/source/t/tinydb/tinydb-4.3.0.tar.gz",
+                    "sha256": "1d102d06f9bb22d739d8061b490c64d420de70dca5f95ebd43a492c43c7bd303"
+                }
+            ]
+        },
+        {
+            "name": "python-requests",
+            "buildsystem": "simple",
+            "build-commands": [
+                "pip3 install --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"requests\" --no-build-isolation"
+            ],
+            "sources": [
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/39/fc/f91eac5a39a65f75a7adb58eac7fa78871ea9872283fb9c44e6545998134/requests-2.25.0-py2.py3-none-any.whl",
+                    "sha256": "e786fa28d8c9154e6a4de5d46a1d921b8749f8b74e28bde23768e5e16eece998"
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/bc/a9/01ffebfb562e4274b6487b4bb1ddec7ca55ec7510b22e4c51f14098443b8/chardet-3.0.4-py2.py3-none-any.whl",
+                    "sha256": "fc323ffcaeaed0e0a02bf4d117757b98aed530d9ed4531e3e15460124c106691"
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/a2/38/928ddce2273eaa564f6f50de919327bf3a00f091b5baba8dfa9460f3a8a8/idna-2.10-py2.py3-none-any.whl",
+                    "sha256": "b97d804b1e9b523befed77c48dacec60e6dcb0b5391d57af6a65a312a90648c0"
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/f5/71/45d36a8df68f3ebb098d6861b2c017f3d094538c0fb98fa61d4dc43e69b9/urllib3-1.26.2-py2.py3-none-any.whl",
+                    "sha256": "d8ff90d979214d7b4f8ce956e80f4028fc6860e4431f731ea4a8c08f23f99473"
+                }
+            ]
+        },
+        {
+            "name": "MyGNUHealth",
+            "buildsystem": "simple",
+            "build-commands" : [
+                "pip3 install --prefix=/app --no-deps ."
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://ftp.gnu.org/gnu/health/mygnuhealth/mygnuhealth-1.0.5.tar.gz",
+                    "sha256": "1a186b02b71371a5c7c18237af3ec623f8539afdead04cc5096ece8b1f29bcc7"
+                },
+                {
+                    "type": "patch",
+                    "path": "1.patch"
+                },
+                {
+                    "type": "patch",
+                    "path": "2.patch"
+                },
+                {
+                    "type": "patch",
+                    "path": "3.patch"
+                }
+            ]
+        }
+    ]
+}

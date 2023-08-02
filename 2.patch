@@ -1,0 +1,11 @@
+--- a/setup.py
++++ b/setup.py
+@@ -55,7 +55,7 @@
+         ('share/applications', ['org.kde.mygnuhealth.desktop']),
+         ('share/doc/mygnuhealth', ['doc/mygnuhealth.rst']),
+         ('share/doc/mygnuhealth/images', glob('doc/images/*', recursive=True)),
+-        ('share/metainfo', ['org.kde.mygnuhealth.metainfo.xml']),
++        ('share/metainfo', ['org.gnuhealth.mygnuhealth.appdata.xml']),
+         ('share/icons/hicolor/scalable/apps/',
+          ['mygnuhealth/images/mygnuhealth.svg']),
+         ]
