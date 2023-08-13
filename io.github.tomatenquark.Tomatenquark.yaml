@@ -1,0 +1,35 @@
+app-id: io.github.tomatenquark.Tomatenquark
+runtime: org.freedesktop.Platform
+runtime-version: '22.08'
+sdk: org.freedesktop.Sdk
+command: tomatenquark
+finish-args:
+  - --socket=pulseaudio
+  - --socket=x11
+  - --share=ipc
+  - --share=network
+  - --device=dri
+  - --persist=.tomatenquark
+
+modules:
+  - name: enet
+    buildsystem: autotools
+    sources:
+      - type: git
+        url: https://github.com/lsalzman/enet.git
+        tag: v1.3.17
+        commit: e0e7045b7e056b454b5093cb34df49dc4cee0bee
+      - type: script
+        dest-filename: autogen.sh
+        commands:
+          - autoreconf -ifv
+
+  - name: tomatenquark
+    buildsystem: cmake
+    config-opts:
+      - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
+    sources:
+      - type: git
+        url: https://github.com/tomatenquark/code.git
+        tag: v0.2.1
+        commit: b37a3e702b70a65e7433c75f60c6c402d6914a67
