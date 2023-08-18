@@ -1,0 +1,50 @@
+app-id: org.vega_strike.vs
+runtime: org.freedesktop.Platform
+runtime-version: '22.08'
+sdk: org.freedesktop.Sdk
+command: vs
+finish-args:
+  - --socket=pulseaudio
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --share=ipc
+  - --share=network
+  - --device=dri
+
+modules:
+  - name: boost
+    buildsystem: simple
+    build-commands:
+      - ./bootstrap.sh --prefix=${FLATPAK_DEST} --with-libraries=atomic,date_time,filesystem,log,python,system,thread
+      - ./b2 -j$FLATPAK_BUILDER_N_JOBS install
+    sources:
+      - type: archive
+        url: https://boostorg.jfrog.io/artifactory/main/release/1.78.0/source/boost_1_78_0.tar.gz
+        sha256: 94ced8b72956591c4775ae2207a9763d3600b30d9d7446562c552f0a14a63be7
+    cleanup:
+      - /lib/cmake
+
+  - name: freeglut
+    build-options:
+      cflags: -fcommon
+    buildsystem: cmake-ninja
+    sources:
+      - type: archive
+        url: https://downloads.sourceforge.net/project/freeglut/freeglut/3.2.1/freeglut-3.2.1.tar.gz
+        sha256: d4000e02102acaf259998c870e25214739d1f16f67f99cb35e4f46841399da68
+    modules:
+      - shared-modules/glu/glu-9.json
+
+  - name: vegastrike
+    buildsystem: cmake
+    subdir: engine
+    builddir: true
+    config-opts:
+      - -DENABLE_PIE=ON
+    build-options:
+      cxxflags: -std=c++11
+    sources:
+      - type: git
+        url: https://github.com/vegastrike/Vega-Strike-Engine-Source.git
+        tag: v0.8.0
+        commit: 1a1ede6b4cae3bc1553b0094457e8935cf824e69
