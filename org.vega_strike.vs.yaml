@@ -1,4 +1,4 @@
-app-id: org.vega_strike.vs
+app-id: org.vega_strike.upon_the_coldest_sea
 runtime: org.freedesktop.Platform
 runtime-version: '22.08'
 sdk: org.freedesktop.Sdk
@@ -15,7 +15,7 @@ modules:
   - name: boost
     buildsystem: simple
     build-commands:
-      - ./bootstrap.sh --prefix=${FLATPAK_DEST} --with-libraries=atomic,date_time,filesystem,log,python,system,thread
+      - ./bootstrap.sh --prefix=${FLATPAK_DEST} --with-libraries=atomic,date_time,filesystem,log,program_options,python,system,thread
       - ./b2 -j$FLATPAK_BUILDER_N_JOBS install
     sources:
       - type: archive
@@ -46,5 +46,5 @@ modules:
     sources:
       - type: git
         url: https://github.com/vegastrike/Vega-Strike-Engine-Source.git
-        tag: v0.8.0
-        commit: 1a1ede6b4cae3bc1553b0094457e8935cf824e69
+        branch: 0.8.x
+        commit: 80ae1dc570ebcab729ff7df02909e1812de58cdf
