@@ -1,0 +1,45 @@
+app-id: io.github.nikki_and_the_robots.nikki
+runtime: org.freedesktop.Platform
+runtime-version: '21.08'
+sdk: org.freedesktop.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.haskell
+command: nikki
+finish-args:
+  - --socket=pulseaudio
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --share=ipc
+  - --share=network
+  - --device=dri
+
+modules:
+  - qt4/qt4-4.8.7-opengl.json
+
+  - name: haskell
+    buildsystem: simple
+    build-commands:
+      - /usr/lib/sdk/haskell/enable.sh
+
+  - name: stack
+    buildsystem: simple
+    build-commands:
+      - install -Dm755 stack ${FLATPAK_DEST}/bin/stack
+    sources:
+      - type: archive
+        url: https://github.com/commercialhaskell/stack/releases/download/v1.9.3/stack-1.9.3-linux-x86_64.tar.gz
+        sha256: e2363728e5818ccc68db9371c15af892a9a1fc86d808d0a9a77257f13696e946
+
+  - name: nikki
+    buildsystem: simple
+    subdir: src
+    build-commands:
+      - ./build-qtwrapper.sh
+      - stack setup --resolver=lts-3.22
+      - stack build --resolver=lts-3.22
+      - ./linuxDeploy.hs --no-copy-shared-objects
+    sources:
+      - type: git
+        url: https://github.com/nikki-and-the-robots/nikki
+        tag: 1.1.1
+        commit: 0bef26a489b465856156c971c0b057dab8f32c2d
