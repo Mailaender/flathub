@@ -1,0 +1,17 @@
+diff -Nur knights_025_src/Makefile new/Makefile
+--- knights_025_src/Makefile	2014-04-26 15:56:08.000000000 +0200
++++ new/Makefile	2021-07-03 21:20:42.747153946 +0200
+@@ -1627,11 +1627,11 @@
+ 	  rm -f $*.d
+ 
+ $(KNIGHTS_BINARY_NAME): $(OFILES_MAIN)
+-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $^ `sdl-config --libs` `freetype-config --libs` `curl-config --libs` -lfontconfig -lX11 $(BOOST_LIBS)
++	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $^ `sdl-config --libs` `freetype-config --libs` `curl-config --libs` -lfontconfig -lX11 -lpthread $(BOOST_LIBS)
+ 
+ 
+ $(SERVER_BINARY_NAME): $(OFILES_SERVER)
+-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $^ `curl-config --libs` $(BOOST_LIBS)
++	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $^ `curl-config --libs` -lpthread $(BOOST_LIBS)
+ 
+ 
+ clean:
