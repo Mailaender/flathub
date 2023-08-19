@@ -1,0 +1,34 @@
+app-id: com.zeroballistics.zb
+runtime: org.freedesktop.Platform
+runtime-version: '22.08'
+sdk: org.freedesktop.Sdk
+command: vs
+finish-args:
+  - --socket=pulseaudio
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --share=ipc
+  - --share=network
+  - --device=dri
+
+modules:
+  - name: raknet
+    buildsystem: cmake
+    build-options:
+      cflags: -Wno-error=narrowing
+      cxxflags: -Wno-error=narrowing
+    sources:
+      - type: archive
+        url: https://downloads.sourceforge.net/project/zeroballistics/external%20dependencies/src/raknet3.261.tar.gz
+        sha256: f5cf3ab876d3ea683c95e6df41f012eb9b36d3768a327ee627748f67e6269f77
+      - type: shell
+        commands:
+          - rm CMakeCache.txt
+
+  - name: zeroballistics
+    buildsystem: cmake
+    subdir: code
+    sources:
+      - type: svn
+        url: https://svn.code.sf.net/p/zeroballistics/code/tags/v2.0/
+        revision: r4457
