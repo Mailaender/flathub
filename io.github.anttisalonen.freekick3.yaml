@@ -1,0 +1,44 @@
+app-id: io.github.anttisalonen.freekick3
+runtime: org.freedesktop.Platform
+runtime-version: 22.08
+sdk: org.freedesktop.Sdk
+command: freekick3
+finish-args:
+  - --device=dri
+  - --share=ipc
+  - --share=network
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --socket=pulseaudio
+  - --persist=.freekick3
+
+modules:
+  - name: boost
+    buildsystem: simple
+    build-commands:
+      - ./bootstrap.sh --prefix=${FLATPAK_DEST} --with-libraries=dserialization,iostreams
+      - ./b2 -j$FLATPAK_BUILDER_N_JOBS install
+    sources:
+      - type: archive
+        url: http://downloads.sourceforge.net/boost/boost/1.55.0/boost_1_55_0.tar.bz2
+        sha256: fff00023dd79486d444c8e29922f4072e1d451fc5a4d2b6075852ead7f2b7b52
+
+  - name: tinyxml
+    buildsystem: meson
+    sources:
+    - type: git
+      url: https://github.com/tintou/tinyxml.git
+      commit: 852527eb49a449599806d4671bb27a79fe0fbf16
+
+  - name: freekick3
+    buildsystem: autotools
+    no-autogen: true
+    no-make-install: true
+    sources:
+      - type: git
+        url: https://github.com/anttisalonen/freekick3.git
+        tag: 0.2.1
+        commit: ab27565b3c8ccb47e4c12b09a0879932b5dbdc4a
+        x-checker-data:
+          type: git
+          tag-pattern: ^([\d.]+)$
