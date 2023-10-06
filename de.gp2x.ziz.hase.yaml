@@ -1,0 +1,32 @@
+app-id: de.gp2x.ziz.hase
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
+rename-desktop-file: hase.desktop
+finish-args:
+  - --device=dri
+  - --share=ipc
+  - --socket=x11
+  - --socket=pulseaudio
+command: hase
+
+modules:
+  - shared-modules/glu/glu-9.json
+  - shared-modules/SDL/SDL-1.2.15.json
+  - shared-modules/SDL/SDL_mixer-1.2.12.json
+  - shared-modules/SDL/SDL_image-1.2.12.json
+  - shared-modules/SDL/SDL_ttf-2.0.11.json
+
+  - name: sparrow3d
+    buildsystem: simple
+    build-commands:
+      - make
+      - install -d ${FLATPAK_DEST}/lib/
+      - cp libsparrow*.so ${FLATPAK_DEST}/lib/
+      - install -d ${FLATPAK_DEST}/include/
+      - cp sparrow*.h ${FLATPAK_DEST}/include/
+    sources:
+      - type: git
+        url: https://github.com/theZiz/sparrow3d
+        tag: 1.3
+        commit: 17630befaf3e8ca7ced69d104462f8858b028af4
