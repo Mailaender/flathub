@@ -1,0 +1,24 @@
+app-id: nl.mooses.FreeGish
+runtime: org.freedesktop.Platform
+runtime-version: 23.08
+sdk: org.freedesktop.Sdk
+command: freegish
+rename-icon: freegish
+rename-desktop-file: freegish.desktop
+finish-args:
+  - --socket=x11
+  - --share=ipc
+  - --share=network
+  - --device=dri
+  - --socket=pulseaudio
+
+modules:
+  - name: freegish
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DINSTALL_FHS=ON
+    sources:
+      - type: git
+        url: https://github.com/freegish/freegish
+        commit: caf58a2f990a939230bab82226e29cd79732f366
+

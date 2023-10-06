@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<component type="desktop">
+  <!--Created with jdAppStreamEdit 7.1-->
+  <id>nl.mooses.FreeGish</id>
+  <name>FreeGish</name>
+  <summary>physics-based platforming game featuring a ball of tar</summary>
+  <developer_name>Joris van de Donk</developer_name>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0</project_license>
+  <description>
+    <p>Freegish is a 2D platform game, where the player maneuvers character of a ball of tar. Character may become sticky, slick, heavy and can jump.</p>
+  </description>
+  <screenshots>
+    <screenshot type="default">
+      <image type="source">https://screenshots.debian.net/shrine/screenshot/6927/simage/large-107152e84199fe23c5fa412eeaeead50.png</image>
+    </screenshot>
+  </screenshots>
+  <url type="homepage">http://mooses.nl/pages/freegish.html</url>
+  <url type="vcs-browser">http://github.com/freegish/freegish</url>
+  <content_rating type="oars-1.1"/>
+</component>
