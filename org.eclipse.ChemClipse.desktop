@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Eclipse ChemClipse
+GenericName=Analytical Chemistry Data System
+Icon=org.eclipse.ChemClipse
+Exec=chemclipse %f
+Comment=Visualization and Analysis of Chromatography, Spectrometry and Spectroscopy Data
+Categories=Education;Chemistry;
+Terminal=false

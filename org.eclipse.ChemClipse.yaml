@@ -1,0 +1,43 @@
+app-id: org.eclipse.ChemClipse
+runtime: org.freedesktop.Platform
+runtime-version: 23.08
+sdk: org.freedesktop.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.openjdk8
+
+command: chemclipse
+finish-args:
+  - --socket=x11
+  - --share=ipc
+  - --device=dri
+  - --share=network
+  - --socket=pulseaudio
+  - --persist=.chemclipse
+  - --persist=.eclipseswtchartsettings
+  - --filesystem=home
+
+modules:
+  - name: openjdk
+    buildsystem: simple
+    build-commands:
+      - /usr/lib/sdk/openjdk8/install.sh
+
+  - name: chemclipse
+    buildsystem: simple
+    build-commands:
+      - mv chemclipse ${FLATPAK_DEST}/chemclipse/
+      - mkdir -p ${FLATPAK_DEST}/bin
+      - ln -sf ${FLATPAK_DEST}/chemclipse/chemclipse ${FLATPAK_DEST}/bin/
+      - ln -sf ${FLATPAK_DEST}/jre/ ${FLATPAK_DEST}/chemclipse/
+      - install -Dm644 ${FLATPAK_ID}.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
+      - install -Dm644 ${FLATPAK_ID}.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg
+    sources:
+      - type: archive
+        url: http://download.eclipse.org/chemclipse/releases/0.8.0/downloads/chemclipse-linux.gtk.x86_64.tar.gz
+        sha256: 4cf4638b5a489a67b2c8c017ed823b35c39ced42c33e170f2c160b131972c756
+        strip-components: 0
+        dest: chemclipse
+      - type: file
+        path: org.eclipse.ChemClipse.desktop
+      - type: file
+        path: org.eclipse.ChemClipse.svg
