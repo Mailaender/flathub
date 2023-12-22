@@ -1,6 +1,6 @@
 app-id: com.thedarkmod.TheDarkMod
 runtime: org.freedesktop.Platform
-runtime-version: 21.08
+runtime-version: '23.08'
 sdk: org.freedesktop.Sdk
 command: thedarkmod
 finish-args:
@@ -12,15 +12,16 @@ finish-args:
 
 modules:
   - name: thedarkmod
-    buildsystem: cmake
+    buildsystem: cmake-ninja
     config-opts:
       - -DUCM_UNITY_BUILD=ON
-    post-install:
-      -
+      - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+      - -DCMAKE_CXX_FLAGS=-O2 -g -pipe -fexceptions -fstack-protector-strong -grecord-gcc-switches -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -fno-omit-frame-pointer -std=c++14
     sources:
       - type: file
-        url: https://www.thedarkmod.com/sources/thedarkmod.2.09.src.7z
-        sha256: 014954544f042e8742b692cb3984f7e18b3cdd0384e91d36dd30103b823b8b19
+        url: https://www.thedarkmod.com/sources/thedarkmod.2.12.src.7z
+        sha256: 404c6332cc33c83f39837c0804a415e47340979ef1d20704d0a74ccf273f500a
       - type: shell
         commands:
-          - bsdtar -xvf thedarkmod.2.09.src.7z
+          - bsdtar -xvf thedarkmod.2.12.src.7z
+          - rm -Rf win32 win64 macosx linux/*/*.a linux/*/*/*.a
