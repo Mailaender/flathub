@@ -1,0 +1,55 @@
+app-id: com.github.lincity_ng.lincity_ng
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
+finish-args:
+  - --share=ipc
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --socket=pulseaudio
+command: lincity-ng
+rename-desktop-file: lincity-ng.desktop
+modules:
+  - shared-modules/physfs/physfs.json
+
+  - name: jam
+    buildsystem: simple
+    build-commands:
+      - make
+    post-install:
+      - install -Dm0755 jam0 ${FLATPAK_DEST}/bin/jam
+    sources:
+      - type: archive
+        url: https://swarm.workshop.perforce.com/downloads/guest/perforce_software/jam/jam-2.6.tar
+        sha256: 16fe402b8603c34027e7f39e047a9597129c52c4a67079add5b3842f593f9948
+
+  - name: SDL2_gfx
+    buildsystem: autotools
+    build-options:
+      all:
+        --disable-static
+      arch:
+        aarch64:
+          config-opts:
+            - --disable-mmx
+    sources:
+      - type: archive
+        url: https://downloads.sf.net/sdl2gfx/SDL2_gfx-1.0.4.tar.gz
+        sha256: 63e0e01addedc9df2f85b93a248f06e8a04affa014a835c2ea34bfe34e576262
+      - type: shell
+        commands:
+          - cp -p /usr/share/automake-*/config.{sub,guess} .
+          - autoreconf -fvi
+
+  - name: lincity-ng
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DLIBXML2_INCLUDE_DIR=/usr/include/libxml2
+    sources:
+      - type: git
+        url: https://github.com/lincity-ng/lincity-ng
+        tag: lincity-ng-2.10.0
+        commit: f03cbe18dfaeb0e141453d3b0a14022c02c26e9e
+        x-checker-data:
+          type: git
+          tag-pattern: ^lincity-ng-([\d.]+)$
