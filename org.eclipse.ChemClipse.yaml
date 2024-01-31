@@ -3,7 +3,7 @@ runtime: org.freedesktop.Platform
 runtime-version: 23.08
 sdk: org.freedesktop.Sdk
 sdk-extensions:
-  - org.freedesktop.Sdk.Extension.openjdk8
+  - org.freedesktop.Sdk.Extension.openjdk17
 
 command: chemclipse
 finish-args:
@@ -20,7 +20,7 @@ modules:
   - name: openjdk
     buildsystem: simple
     build-commands:
-      - /usr/lib/sdk/openjdk8/install.sh
+      - /usr/lib/sdk/openjdk17/install.sh
 
   - name: chemclipse
     buildsystem: simple
@@ -33,10 +33,14 @@ modules:
       - install -Dm644 ${FLATPAK_ID}.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg
     sources:
       - type: archive
-        url: http://download.eclipse.org/chemclipse/releases/0.8.0/downloads/chemclipse-linux.gtk.x86_64.tar.gz
-        sha256: 4cf4638b5a489a67b2c8c017ed823b35c39ced42c33e170f2c160b131972c756
+        url: https://ci.eclipse.org/chemclipse/job/chemclipse/job/develop/lastSuccessfulBuild/artifact/chemclipse/products/org.eclipse.chemclipse.rcp.compilation.community.product/target/products/org.eclipse.chemclipse.rcp.compilation.community.product.id-linux.gtk.x86_64.tar.gz
+        sha256: 16b267e7de7150c91818c12ded35d69ed647403996c3d9880b439aff4caf600e
         strip-components: 0
         dest: chemclipse
+      - type: shell
+        commands:
+          - rm chemclipse/plugins/com.sun.jna_5.13.0.v20230812-1000/com/sun/jna/sunos-sparcv9/libjnidispatch.so
+          - rm chemclipse/plugins/com.sun.jna_5.13.0.v20230812-1000/com/sun/jna/sunos-sparc/libjnidispatch.so
       - type: file
         path: org.eclipse.ChemClipse.desktop
       - type: file
