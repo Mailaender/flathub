@@ -1,0 +1,46 @@
+app-id: io.sourceforge.dangerdeep
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
+command: dangerdeep
+finish-args:
+  - "--socket=x11"
+  - "--socket=pulseaudio"
+  - "--share=ipc"
+  - "--share=network"
+
+modules:
+  - shared-modules/glu/glu-9.json
+  - shared-modules/SDL/SDL-1.2.15.json
+  - shared-modules/SDL/SDL_net-1.2.8.json
+  - shared-modules/SDL/SDL_image-1.2.12.json
+  - shared-modules/SDL/SDL_mixer-1.2.12.json
+
+  - shared-modules/python2.7/python-2.7.json
+  - name: scons
+    buildsystem: simple
+    cleanup:
+    - "*"
+    sources:
+    - type: archive
+      url: http://downloads.sourceforge.net/project/scons/scons/2.5.1/scons-2.5.1.tar.gz
+      sha256: 0b25218ae7b46a967db42f2a53721645b3d42874a65f9552ad16ce26d30f51f2
+    build-commands:
+    - python setup.py install --prefix=${FLATPAK_DEST} --optimize=1
+
+  - name: dangerdeep
+    buildsystem: simple
+    build-commands:
+      - scons -j${FLATPAK_BUILDER_N_JOBS} installbindir=${FLATPAK_DEST}/bin installdatadir=${FLATPAK_DEST}/share datadir=${FLATPAK_DEST}/share usex86sse=1
+    sources:
+      - type: archive
+        url: https://downloads.sourceforge.net/dangerdeep/danger_from_the_deep-src/0.3.0/dangerdeep-0.3.0.tar.gz
+        sha256: bdab6b9b1c2b5f8e618f5c346965ec1f48c9edc9bff1d4f5ff7c8d235464283f
+      - type: patch
+        path: libgl-scons.patch
+      #- type: shell
+       # commands:
+       #   - rm data/LICENSE # duplicate
+      #- type: archive
+       # url: https://downloads.sourceforge.net/dangerdeep/danger_from_the_deep-data/0.3.0/dangerdeep-data-0.3.0.zip
+        #sha256: 00412a4f8f571a9291df48fa40fbbe846680b4fcb1de2f168539b1606cb4fb81
