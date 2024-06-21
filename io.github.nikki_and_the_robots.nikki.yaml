@@ -1,6 +1,6 @@
 app-id: io.github.nikki_and_the_robots.nikki
 runtime: org.freedesktop.Platform
-runtime-version: '23.08'
+runtime-version: '19.08'
 sdk: org.freedesktop.Sdk
 command: nikki
 finish-args:
@@ -12,7 +12,7 @@ finish-args:
   - --device=dri
 
 modules:
-  - qt4/qt4-4.8.7-opengl.json
+  #- qt4/qt4-4.8.7-opengl.json
 
   - name: haskell
     buildsystem: autotools
@@ -20,15 +20,14 @@ modules:
       - install
     sources:
       - type: archive
-        url: https://downloads.haskell.org/ghc/8.10.7/ghc-8.10.7-aarch64-deb10-linux.tar.xz
-        sha256: 7e8ed05533b8ed0440bfb4881e3098333a9dadf24cb6857c2446879e43f7362c
-        only-arches:
-          - aarch64
-      - type: archive
-        url: https://downloads.haskell.org/ghc/8.10.7/ghc-8.10.7-x86_64-deb10-linux.tar.xz
-        sha256: a13719bca87a0d3ac0c7d4157a4e60887009a7f1a8dbe95c4759ec413e086d30
+        url: https://downloads.haskell.org/ghc/7.10.2/ghc-7.10.2-x86_64-unknown-linux-deb7.tar.xz
+        sha256: 0144791f0cc5ef5991356b3b3a4521da8072dd1c216a48e7d2dfbbdca827cdf1
         only-arches:
           - x86_64
+      - type: shell
+        commands:
+          - mkdir -p /app/lib
+          - ln -s /usr/lib/x86_64-linux-gnu/libtinfo.so /app/lib/libtinfo.so.5
     cleanup:
       - '*'
 
@@ -38,15 +37,10 @@ modules:
       - install -Dm755 stack ${FLATPAK_DEST}/bin/stack
     sources:
       - type: archive
-        url: https://github.com/commercialhaskell/stack/releases/download/v1.9.3/stack-1.9.3-linux-x86_64.tar.gz
-        sha256: e2363728e5818ccc68db9371c15af892a9a1fc86d808d0a9a77257f13696e946
+        url: https://github.com/commercialhaskell/stack/releases/download/v0.1.10.1/stack-0.1.10.1-linux-x86_64.tar.gz
+        sha256: 395f41b93012cda4494f4f5d6587ef82056a03b69ad0f7087c3fae49aa30b51a
         only-arches:
           - x86_64
-      - type: archive
-        url: https://github.com/commercialhaskell/stack/releases/download/v1.9.3/stack-1.9.3-linux-aarch64.tar.gz
-        sha256: 24e6a54eaf21c8237f7a23edd15eb55d2f81b23fd7963356b927f804b55c7d76
-        only-arches:
-          - aarch64
     cleanup:
       - '*'
 
