@@ -1,0 +1,36 @@
+app-id: org.eclipse.theia
+runtime: org.freedesktop.Sdk
+runtime-version: '24.08'
+sdk: org.freedesktop.Sdk
+base: org.electronjs.Electron2.BaseApp
+base-version: '24.08'
+command: theia
+finish-args:
+  - --share=network
+  - --share=ipc
+  - --socket=x11
+  - --socket=pulseaudio
+  - --socket=ssh-auth
+  - --device=all
+  - --allow=devel
+  - --filesystem=host
+  - --talk-name=org.freedesktop.Notifications
+  - --talk-name=org.freedesktop.Flatpak
+  - --talk-name=com.canonical.AppMenu.Registrar
+  - --talk-name=com.canonical.AppMenu.Registrar.*
+modules:
+  - name: theia
+    buildsystem: simple
+    build-commands:
+      - ar x TheiaIDE.deb
+      - tar xf data.tar.xz
+      - mv opt ${FLATPAK_DEST}/opt
+      - rm -r TheiaIDE.deb control.tar.* data.tar.xz debian-binary
+      - mkdir -p ${FLATPAK_DEST}/bin
+      - ln -sf ${FLATPAK_DEST}/opt/TheiaIDE/theia-ide-electron-app ${FLATPAK_DEST}/bin/theia
+    sources:
+      - type: file
+        url: https://download.eclipse.org/theia/ide/1.54.0/linux/TheiaIDE.deb
+        sha256: 0969262fe36d730ffe3712f7a28d32fe8b105714581dd08492cd723c8b188723
+        only-arches:
+          - x86_64
