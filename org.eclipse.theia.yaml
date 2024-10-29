@@ -1,7 +1,9 @@
 app-id: org.eclipse.theia
-runtime: org.freedesktop.Sdk
+runtime: org.freedesktop.Platform
 runtime-version: '24.08'
 sdk: org.freedesktop.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.node20
 base: org.electronjs.Electron2.BaseApp
 base-version: '24.08'
 command: theia
@@ -16,21 +18,53 @@ finish-args:
   - --filesystem=host
   - --talk-name=org.freedesktop.Notifications
   - --talk-name=org.freedesktop.Flatpak
-  - --talk-name=com.canonical.AppMenu.Registrar
-  - --talk-name=com.canonical.AppMenu.Registrar.*
+
 modules:
+  - name: libsecret
+    buildsystem: meson
+    config-opts:
+    - -Dgcrypt=false
+    - -Dgtk_doc=false
+    - -Dintrospection=false
+    - -Dmanpage=false
+    - -Dvapi=false
+    cleanup:
+    - /bin
+    - /include
+    - /lib/pkgconfig
+    - /share/man
+    sources:
+    - type: archive
+      url: https://gitlab.gnome.org/GNOME/libsecret/-/archive/0.20.5/libsecret-0.20.5.tar.gz
+      sha256: b33b9542222ea8866f6ff2d31c0ad373877c2277db546ca00cc7fdda9cbab1c3
+
   - name: theia
     buildsystem: simple
+    build-options:
+      append-path: /usr/lib/sdk/node20/bin
+      env:
+        XDG_CACHE_HOME: /run/build/theia/flatpak-node/cache
+        ELECTRON_CACHE: /run/build/theia/flatpak-node/cache/electron
+        TMPDIR: /run/build/theia/flatpak-node/tmp
+        ELECTRON_SKIP_BINARY_DOWNLOAD: 'true'
+        PUPPETEER_SKIP_DOWNLOAD: 'true'
+        XDG_CACHE_HOME: /run/build/theia/flatpak-node/cache
+        npm_config_nodedir: /usr/lib/sdk/node20
     build-commands:
-      - ar x TheiaIDE.deb
-      - tar xf data.tar.xz
-      - mv opt ${FLATPAK_DEST}/opt
-      - rm -r TheiaIDE.deb control.tar.* data.tar.xz debian-binary
-      - mkdir -p ${FLATPAK_DEST}/bin
-      - ln -sf ${FLATPAK_DEST}/opt/TheiaIDE/theia-ide-electron-app ${FLATPAK_DEST}/bin/theia
+      - HOME=$PWD yarn config --offline set yarn-offline-mirror $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn-mirror
+      - yarn --frozen-lockfile --force --offline.
+      - yarn --offline build
+      - install -Dm 755 flatpak-node/libffmpeg.so -t ${FLATPAK_DEST}/theia
+      - . flatpak-node/electron-builder-arch-args.sh; yarn --offline electron package $ELECTRON_BUILDER_ARCH_ARGS
+      - install -Dm 755 start-theia.sh ${FLATPAK_DEST}/bin/theia
     sources:
-      - type: file
-        url: https://download.eclipse.org/theia/ide/1.54.0/linux/TheiaIDE.deb
-        sha256: 0969262fe36d730ffe3712f7a28d32fe8b105714581dd08492cd723c8b188723
-        only-arches:
-          - x86_64
+      - type: git
+        url: https://github.com/eclipse-theia/theia-ide.git
+        tag: 1.54.0
+        commit: ed203687bad53fdbd22012926978ac40d7d8cd23
+      # flatpak-node-generator yarn yarn.lock --node-chromedriver-from-electron 28.3.3 --electron-ffmpeg lib
+      - generated-sources.json
+      - type: script
+        dest-filename: start-theia.sh
+        commands:
+          - zypak-wrapper ${FLATPAK_DEST}/theia/theia
