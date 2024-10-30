@@ -23,7 +23,6 @@ modules:
   - name: libsecret
     buildsystem: meson
     config-opts:
-    - -Dgcrypt=false
     - -Dgtk_doc=false
     - -Dintrospection=false
     - -Dmanpage=false
@@ -34,9 +33,10 @@ modules:
     - /lib/pkgconfig
     - /share/man
     sources:
-    - type: archive
-      url: https://gitlab.gnome.org/GNOME/libsecret/-/archive/0.20.5/libsecret-0.20.5.tar.gz
-      sha256: b33b9542222ea8866f6ff2d31c0ad373877c2277db546ca00cc7fdda9cbab1c3
+    - type: git
+      url: https://gitlab.gnome.org/GNOME/libsecret.git
+      tag: 0.21.4
+      commit: 6b5a6c28afc6dd93c232a4907a87c881079ff91b
 
   - name: theia
     buildsystem: simple
@@ -48,14 +48,15 @@ modules:
         TMPDIR: /run/build/theia/flatpak-node/tmp
         ELECTRON_SKIP_BINARY_DOWNLOAD: 'true'
         PUPPETEER_SKIP_DOWNLOAD: 'true'
-        XDG_CACHE_HOME: /run/build/theia/flatpak-node/cache
         npm_config_nodedir: /usr/lib/sdk/node20
     build-commands:
       - HOME=$PWD yarn config --offline set yarn-offline-mirror $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn-mirror
       - yarn --frozen-lockfile --force --offline.
       - yarn --offline build
-      - install -Dm 755 flatpak-node/libffmpeg.so -t ${FLATPAK_DEST}/theia
-      - . flatpak-node/electron-builder-arch-args.sh; yarn --offline electron package $ELECTRON_BUILDER_ARCH_ARGS
+      - yarn --offline download:plugins
+      - . flatpak-node/electron-builder-arch-args.sh; yarn --offline electron-builder --dir $ELECTRON_BUILDER_ARCH_ARGS
+      - cp -r dist/theia-linux-* /app/theia-ide
+      - install -Dm 755 flatpak-node/libffmpeg.so -t ${FLATPAK_DEST}/theia-ide
       - install -Dm 755 start-theia.sh ${FLATPAK_DEST}/bin/theia
     sources:
       - type: git
@@ -67,4 +68,4 @@ modules:
       - type: script
         dest-filename: start-theia.sh
         commands:
-          - zypak-wrapper ${FLATPAK_DEST}/theia/theia
+          - zypak-wrapper ${FLATPAK_DEST}/theia-ide/theia
