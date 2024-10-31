@@ -50,13 +50,12 @@ modules:
         PUPPETEER_SKIP_DOWNLOAD: 'true'
         npm_config_nodedir: /usr/lib/sdk/node20
     build-commands:
-      - HOME=$PWD yarn config --offline set yarn-offline-mirror $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn-mirror
-      - yarn --frozen-lockfile --force --offline.
-      - yarn --offline build
-      - yarn --offline download:plugins
-      - . flatpak-node/electron-builder-arch-args.sh; yarn --offline electron-builder --dir $ELECTRON_BUILDER_ARCH_ARGS
-      - cp -r dist/theia-linux-* /app/theia-ide
-      - install -Dm 755 flatpak-node/libffmpeg.so -t ${FLATPAK_DEST}/theia-ide
+      - yarn --frozen-lockfile --force
+      - unzip -o flatpak-node/cache/electron/electron-v*-linux-*.zip -d node_modules/electron/dist/
+      - yarn build
+      - . flatpak-node/electron-builder-arch-args.sh; yarn --cwd applications/electron electron-builder --dir $ELECTRON_BUILDER_ARCH_ARGS
+      - mv applications/electron/dist/linux-unpacked/ ${FLATPAK_DEST}/lib/theia
+      - install -Dm 755 flatpak-node/libffmpeg.so -t ${FLATPAK_DEST}/lib/theia
       - install -Dm 755 start-theia.sh ${FLATPAK_DEST}/bin/theia
     sources:
       - type: git
@@ -65,7 +64,13 @@ modules:
         commit: ed203687bad53fdbd22012926978ac40d7d8cd23
       # flatpak-node-generator yarn yarn.lock --node-chromedriver-from-electron 28.3.3 --electron-ffmpeg lib
       - generated-sources.json
+      - type: inline
+        contents: |
+          yarn-offline-mirror /run/build/theia/flatpak-node/yarn-mirror
+          --install.offline true
+          --run.offline true
+        dest-filename: .yarnrc
       - type: script
         dest-filename: start-theia.sh
         commands:
-          - zypak-wrapper ${FLATPAK_DEST}/theia-ide/theia
+          - zypak-wrapper /app/lib/theia/theia-ide-electron-app
