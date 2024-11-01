@@ -52,8 +52,11 @@ modules:
     build-commands:
       - yarn --frozen-lockfile --force
       - unzip -o flatpak-node/cache/electron/electron-v*-linux-*.zip -d node_modules/electron/dist/
-      - yarn build
-      - . flatpak-node/electron-builder-arch-args.sh; yarn --cwd applications/electron electron-builder --dir $ELECTRON_BUILDER_ARCH_ARGS
+      - yarn build:extensions
+      - yarn --cwd applications/electron -s rebuild
+      - yarn theia build --app-target="browser"
+      - yarn theia build --app-target="electron"
+      - . flatpak-node/electron-builder-arch-args.sh; yarn --cwd applications/electron electron-builder --dir $ELECTRON_BUILDER_ARCH_ARGS --publish always
       - mv applications/electron/dist/linux-unpacked/ ${FLATPAK_DEST}/lib/theia
       - install -Dm 755 flatpak-node/libffmpeg.so -t ${FLATPAK_DEST}/lib/theia
       - install -Dm 755 start-theia.sh ${FLATPAK_DEST}/bin/theia
