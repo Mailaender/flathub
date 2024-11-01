@@ -57,7 +57,9 @@ modules:
       - yarn theia build --app-target="browser"
       - yarn theia build --app-target="electron"
       - . flatpak-node/electron-builder-arch-args.sh; yarn --cwd applications/electron electron-builder --dir $ELECTRON_BUILDER_ARCH_ARGS --publish always
-      - mv applications/electron/dist/linux-unpacked/ ${FLATPAK_DEST}/lib/theia
+      - cp -r lib/ applications/electron/dist/linux-unpacked/resources/app/lib
+      - cp -r src-gen/ applications/electron/dist/linux-unpacked/resources/app/src-gen
+      - cp -r applications/electron/dist/linux-unpacked/ ${FLATPAK_DEST}/lib/theia
       - install -Dm 755 flatpak-node/libffmpeg.so -t ${FLATPAK_DEST}/lib/theia
       - install -Dm 755 start-theia.sh ${FLATPAK_DEST}/bin/theia
     sources:
