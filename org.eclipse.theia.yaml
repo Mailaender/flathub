@@ -52,22 +52,20 @@ modules:
     build-commands:
       - yarn --frozen-lockfile --force
       - unzip -o flatpak-node/cache/electron/electron-v*-linux-*.zip -d node_modules/electron/dist/
-      - yarn build:extensions
-      - yarn --cwd applications/electron -s rebuild
-      - yarn theia build --app-target="browser"
-      - yarn theia build --app-target="electron"
-      - . flatpak-node/electron-builder-arch-args.sh; yarn --cwd applications/electron electron-builder --dir $ELECTRON_BUILDER_ARCH_ARGS --publish always
-      - cp -r lib/ applications/electron/dist/linux-unpacked/resources/app/lib
-      - cp -r src-gen/ applications/electron/dist/linux-unpacked/resources/app/src-gen
+      - yarn build
+      - |
+        . $FLATPAK_BUILDER_BUILDDIR/flatpak-node/electron-builder-arch-args.sh
+        yarn --cwd applications/electron package -- $ELECTRON_BUILDER_ARCH_ARGS --dir
+      - mkdir -p ${FLATPAK_DEST}/lib/
       - cp -r applications/electron/dist/linux-unpacked/ ${FLATPAK_DEST}/lib/theia
-      - install -Dm 755 flatpak-node/libffmpeg.so -t ${FLATPAK_DEST}/lib/theia
+      - mkdir -p ${FLATPAK_DEST}/bin/
       - install -Dm 755 start-theia.sh ${FLATPAK_DEST}/bin/theia
     sources:
       - type: git
         url: https://github.com/eclipse-theia/theia-ide.git
-        tag: 1.54.0
-        commit: ed203687bad53fdbd22012926978ac40d7d8cd23
-      # flatpak-node-generator yarn yarn.lock --node-chromedriver-from-electron 28.3.3 --electron-ffmpeg lib
+        tag: 1.55.0
+        commit: 58c7f43f92433fd02165908e4016c98fd06f078b
+      # flatpak-node-generator yarn yarn.lock --node-chromedriver-from-electron 28.3.3 --electron-ffmpeg=archive
       - generated-sources.json
       - type: inline
         contents: |
