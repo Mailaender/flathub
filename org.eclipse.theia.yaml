@@ -55,7 +55,7 @@ modules:
       - yarn build
       - |
         . $FLATPAK_BUILDER_BUILDDIR/flatpak-node/electron-builder-arch-args.sh
-        yarn --cwd applications/electron package -- $ELECTRON_BUILDER_ARCH_ARGS --dir
+        yarn electron package -- $ELECTRON_BUILDER_ARCH_ARGS --dir
       - mkdir -p ${FLATPAK_DEST}/lib/
       - cp -r applications/electron/dist/linux-unpacked/ ${FLATPAK_DEST}/lib/theia
       - mkdir -p ${FLATPAK_DEST}/bin/
@@ -65,7 +65,7 @@ modules:
         url: https://github.com/eclipse-theia/theia-ide.git
         tag: 1.55.0
         commit: 58c7f43f92433fd02165908e4016c98fd06f078b
-      # flatpak-node-generator yarn yarn.lock --node-chromedriver-from-electron 28.3.3 --electron-ffmpeg=archive
+      # flatpak-node-generator yarn yarn.lock --electron-ffmpeg=archive
       - generated-sources.json
       - type: inline
         contents: |
