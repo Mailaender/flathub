@@ -1,0 +1,37 @@
+app-id: com.wishartlab.cfm
+runtime: org.freedesktop.Platform
+runtime-version: '18.08'
+sdk: org.freedesktop.Sdk
+command: cfm
+finish-args:
+  - --socket=x11
+  - --share=ipc
+  - --filesystem=host
+
+modules:
+    - name: boost
+      buildsystem: simple
+      build-commands:
+        - ./bootstrap.sh --prefix=/app --with-libraries=regex,serialization,filesystem,system
+        - ./b2 -j "${FLATPAK_BUILDER_N_JOBS}" install
+      sources:
+        - type: archive
+          url: http://download.sourceforge.net/boost/boost/1.55.0/boost_1_55_0.tar.bz2
+          sha256: fff00023dd79486d444c8e29922f4072e1d451fc5a4d2b6075852ead7f2b7b52
+
+    - name: rdkit
+      buildsystem: cmake
+      config-opts:
+        - -DRDK_BUILD_INCHI_SUPPORT=ON
+        - -DRDK_BUILD_PYTHON_WRAPPERS=OFF
+      sources:
+        - type: archive
+          url: http://download.sourceforge.net/rdkit/rdkit/Q3_2013/RDKit_2013_09_1.tgz
+          sha256: 459ffabbca831cb85f7b5663ddd47fbf779d83f2bc8264231a2287168af7f01e
+        - type: archive
+          url: https://github.com/IUPAC-InChI/InChI/releases/download/v1.04/INCHI-1-SRC.zip
+          sha256: 1e9f58df2e6d2ff90ae015265c26669d20c5def888117032d6eef1929b35590e
+        - type: shell
+          commands:
+            - mkdir -p External/INCHI-API/src
+            - cp INCHI_API/inchi_dll/* External/INCHI-API/src
